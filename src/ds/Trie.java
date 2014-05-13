@@ -17,82 +17,62 @@ it builds structure letter by letter.
 // (file-name-base) ;=> "Trie"
 // (file-name-title)
 
+(keymap-set-local "<f5>" (lambda () (interactive) (file-save) (shell-command (concat "ant run " (filename-title)) (concat (filename-title) " output"))))
 
-// package ds;
 
-import java.util.*;
 
+package ds;
+
+
+// import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+// import static Test.test;
+// import static lib.Test.test;
+
+
+
+// * Trie
+
+
+/* Trie
+ */
+public class Trie {
+    
+    
+    
 // * Nodes
 
-// /* Nodes
-//  */
-// class Nodes {
-//     // HashMap<char, Node> children = new HashMap<char, Node>();
-//     // need to be able to iterate over children - can do in hashmap? don't think so.
-//     // unless kept separate array
-//     // could do analysis of data types
-    
-//     public Nodes() {
-//     }
-    
-//     // public Node addNode(char c, Node n) {
-//     // }
-    
-//     public static void test() {
-//         System.out.println("hi nodes!");
-        
-//         Nodes nodes = new Nodes();
-//         // System.out.println(nodes);
-        
-//         // Node n = new Node();
-//         // nodes.addNode('c', n);
-        
-// //        Hash h = new Hash();
-// //        h.add('a', "lij");
-// //        assert h.get('a')=="lij"; // t??
-// //        // assert(h.get('a')=="lij");
-// //        System.out.println(h.get('a'));
-        
-        
-//     }
-// }
-
-
-
-
-
-
-// class Nodes {
-    // Map<Character, Node> children;
-// }
-@SuppressWarnings("serial")
-class Nodes extends HashMap<Character, Node> {
-    // public Nodes() { }
+/* Nodes
+ */
+@SuppressWarnings("serial") // why?
+static class Nodes extends HashMap<Character, Node> {
     Node addNode(Character k, Node v) {
         return put(k,v);
     }
 }
 
 
+
 // * Node
 
-/*
-  Node
+/* Node
   a node represents a letter. following letters in a word are children.
   say there's a top node representing the bol.
   so it can have multiple following letters.
   in a binary tree would just store tree of nodes with names
   and a map would be clearer, codewise, and could abstract it to an array if necess
 */
-class Node {
+static class Node {
     
     char key;
     boolean endofword;
-    // Nodes children;
-    // Map<Character, Node> children;
     Nodes children = new Nodes();
         
     
+    // constructors
     public Node() {
         this.key = '/';
     }
@@ -109,7 +89,6 @@ class Node {
     }
         
     
-    
     public Node addChildNode(char c) {
         //. what if exists?
         Node node = getChildNode(c);
@@ -119,13 +98,8 @@ class Node {
         }
         return node;
     }
-        
+    
     public void addWord(String s) {
-        // if ("".equals(s)) return;
-        // char c = s.charAt(0);
-        // Node n = this.addChildNode(c);
-        // if (s.length()==1) n.endofword = true;
-        // n.addWord(s.substring(1)); // recurse
         Node n = this;
         int nchars = s.length();
         for (int i=0; i < nchars; i++) {
@@ -134,7 +108,6 @@ class Node {
             if (i==nchars-1) n.endofword = true;
         }
     }
-        
     
     public Node getChildNode(char c) {
         //. what if not found? throw error?
@@ -144,12 +117,6 @@ class Node {
 
     // find node following characters in string
     public Node findNode(String s) {
-        // if ("".equals(keys)) return null;
-        // char c = keys.charAt(0);
-        // Node n = this.getChildNode(c);
-        // if (n!=null) return n.findNode(keys.substring(1)); // recurse
-        // return null;
-        
         Node n = this;
         int nchars = s.length();
         for (int i=0; i < nchars; i++) {
@@ -160,27 +127,35 @@ class Node {
         return n;
     }
     
-    
-    public List<String> getWords(String prefix) {
+    // get words below this node, prefixed with given string
+    public ArrayList<String> getWords(String prefix) {
         ArrayList<String> list = new ArrayList<String>();
-        list.add("house");
-        
+        for (Node n : children.values()) {
+            String nodestring = prefix + n.key;
+            if (n.endofword) list.add(nodestring);
+            else list.addAll(n.getWords(nodestring));
+        }
+        return list;
+    }
+
+    // node = root.findNode("re");
+    // words = node.getWords("re");
+    // words = root.getWordsStartingWith("re");
+    
+    // public List<String> getWords(String prefix) {
+    public List<String> getWordsStartingWith(String prefix) {
+        Node node = findNode(prefix);
+        // ArrayList<String> list = new ArrayList<String>();
+        // if (node.endofword) list.add(prefix);
+        // list.append(node.getWords(prefix));
+        ArrayList<String> list = node.getWords(prefix);
+        if (node.endofword) list.add(0, prefix);
         return list;
     }
     
-    // public getWords(prefix="") {
-    //     list = [];
-    //     for (node : childnodes) {
-    //         nodestring = prefix + node.key;
-    //         if endofword, list+=nodestring;
-    //         else list.append(node.getwords(nodestring));
-    //     }
-    //     return list;
-    // }
-        
         
     // public static void main(String[] args) {
-    public static void test() {
+    public static void testclass() {
         System.out.println("hi node!");
         
         Node root = new Node();
@@ -200,6 +175,11 @@ class Node {
         assert (n==null);
              
         // addWord
+        root.addWord("i");
+        n = root.getChildNode('i');
+        assert (n.key=='i');
+        assert (n.endofword==true);
+        
         root.addWord("red");
         
         // getChildren
@@ -213,11 +193,24 @@ class Node {
         // findNode
         n = root.findNode("re");
         assert (n.key=='e');
+        assert (n.endofword==false);
+        
         n = root.findNode("zork");
         assert (n==null);
         
         
-        List<String> list = root.getWords("r");
+        // getWords starting with
+        // List<String> list = root.getWords("r");
+        root.addWord("room");
+        root.addWord("robot");
+        List<String> list;
+        list = root.getWordsStartingWith("red");
+        assert (list.contains("red"));
+        System.out.println(list);
+        list = root.getWordsStartingWith("re");
+        assert (list.contains("red"));
+        System.out.println(list);
+        list = root.getWordsStartingWith("r");
         assert (list.contains("red"));
         System.out.println(list);
         
@@ -229,53 +222,55 @@ class Node {
     
     
 
-// * Trie
-
-
-/* Trie
- */
-class Trie {
     
-    // Node n = new Node();
-    // public Trie() {
+    
+    
+    Node root = new Node();
+    
+    public void addWord(String word) {
+        root.addWord(word);
+    }
+    
+    // public ArrayList<String> getWords(String startingWith) {
     // }
-    
-    public static void test() {
-        System.out.println("Hello trie");
-        // Trie t = new Trie();
-        // System.out.println(t);
-        // t.addstring("cat");
-        // t.addstring("cattle");
-        // t.addstring("cart");
         
-        // cat, cattle, cart
-        // t.getstrings("ca");
+    public static void testclass() {
+        System.out.println("Hello trie");
+        
+        Trie t = new Trie();
+        System.out.println(t);
+        
+        // t.addWord("i");
+        t.addWord("if");
+        // t.addWord("in");
+        // t.addWord("info");
+        // t.addWord("into");
+        // t.addWord("red");
+        // t.addWord("robot");
+        // t.addWord("room");
+
+        // test(t.getWords(), "[i, if, in, info, into, red, robot, room]"); // all words
+        // test(t.getWords("i"), "[i, if, in, info, into]");
+     // test(t.getWords(in) -> in,info,into
+        
+        // test(t.getWords("if"), "[if]");
+        
+     // test(t.getWords(is) -> []
+     // test(t.getWords(r) -> red,robot,room
+     // test(t.getWords(ra) -> []
+     // test(t.getWords(z) -> []
+
+
     }
     
     public static void main(String[] args) {
-        Node.test();
-        // Nodes.test();
-        // Trie.test();        
+        Trie.testclass();
+        // Node.testclass();
+        // Nodes.testclass();
     }
 }
 
 
-
-
-/*
-
-so each level would have 26 slots. 
-if made explicit, 26^n total.
-say n = 10
-10^15ish
-
-
-first letter
-put it in 
-  
-  
-  
-*/
 
 
 
