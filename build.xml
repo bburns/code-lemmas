@@ -1,32 +1,34 @@
 <?xml version="1.0"?>
 
-<project name="Ant-Test" default="main" basedir=".">
 
+<project name="code-lemmas" default="main" basedir=".">
+
+  <!-- Properties -->
   <!-- Sets variables which can later be used. -->
   <!-- The value of a property is accessed via ${} -->
   <property name="src.dir" location="src" />
   <property name="classes.dir" location="build/classes" />
   <property name="docs.dir" location="build/docs" />
-  <!-- <property name="dist.dir" location="build/dist" /> -->
   <property name="jar.dir" location="build/jar" />
 
-  <!-- Deletes the existing build, docs and dist directory-->
+  
+  <!-- Clean -->
   <target name="clean">
     <delete dir="${classes.dir}" />
     <delete dir="${docs.dir}" />
-    <!-- <delete dir="${dist.dir}" /> -->
     <delete dir="${jar.dir}" />
   </target>
 
-  <!-- Creates the  classes, docs and dist directory-->
+  
+  <!-- Makedirs -->
   <target name="makedir">
     <mkdir dir="${classes.dir}" />
     <mkdir dir="${docs.dir}" />
-    <!-- <mkdir dir="${dist.dir}" /> -->
     <mkdir dir="${jar.dir}" />
   </target>
 
   
+  <!-- Compile -->
   <!-- javac -Xlint:all -Werror %1.java && java -ea %1 -->
 <!-- :: > javac -Xlint:all -Werror -g -verbose [-classpath foo] -d classfiles foo.java [more.java] -->
 <!-- ::   -Xlint                     Enable recommended warnings -->
@@ -35,15 +37,16 @@
 <!-- ::   -verbose                   Output messages about what the compiler is doing -->
 <!-- ::   -classpath <path>          Specify where to find user class files and annotation processors -->
 <!-- ::   -d <directory>             Specify where to place generated class files -->
-  
-  
-  <!-- Compiles the java code (including the usage of library for JUnit -->
-  <target name="compile" depends="clean, makedir">
-    <javac srcdir="${src.dir}" destdir="${classes.dir}">
+  <!-- <target name="compile" depends="clean, makedir"> -->
+  <target name="compile">
+    <javac srcdir="${src.dir}" destdir="${classes.dir}" includeAntRuntime="false" debug="on">
+      <compilerarg value="-Xlint"/>
+      <compilerarg value="-Werror"/>
     </javac>
   </target>
 
-  <!-- Creates Javadoc -->
+  
+  <!-- Javadoc -->
   <target name="docs" depends="compile">
     <javadoc packagenames="src" sourcepath="${src.dir}" destdir="${docs.dir}">
       <!-- Define which files / directory should get included, we include all -->
@@ -53,7 +56,8 @@
     </javadoc>
   </target>
 
-  <!--Creates the deployable jar file  -->
+  
+  <!-- Jar -->
   <target name="jar" depends="compile">
     <jar destfile="${jar.dir}\JavaLemmas.jar" basedir="${classes.dir}">
       <manifest>
@@ -62,33 +66,25 @@
     </jar>
   </target>
 
+  
+  <!-- Tests -->
   <!-- compile and run unit tests	Does not depend on build.  ?  -->
   <!-- <target name="test" depends="compile"> -->
     <!-- <java > -->
   <!-- </target> -->
   
+  
+  <!-- Main -->
   <!-- <target name="main" depends="compile, jar, docs"> -->
   <target name="main" depends="compile">
     <description>Main target</description>
   </target>
-
   
   
-  <!-- <property name="classpath.property" value="${basedir}/../com.vogella.website.repository/target/repository/plugins/"/> -->
-  <!-- <property name="build.dir" location="bin" /> -->
   
-  <!-- <target name="run"> -->
-  <!--   <path id="runtime.path"> -->
-  <!--     <fileset dir="${classpath.property}" includes="*.jar"/> -->
-  <!--   </path> -->
-  <!--   <echo message = "Ant classpath directory: ${classpath.property}"/> -->
-    <!-- <java classname="ds.Graph" fork="false" classpathref="runtime.path"/> -->
-  <!-- </target> -->
-  
-  
+  <!-- Run -->
   <!-- javac -Xlint:all -Werror %1.java && java -ea %1 -->
-
-  <target name="run">
+  <target name="run" depends="compile">
     <!-- <java jar="build/jar/JavaLemmas.jar" fork="true"/> -->
     <java classname="ds.Trie" classpath="build/classes"/>
   </target>
