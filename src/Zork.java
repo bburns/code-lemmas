@@ -1,83 +1,38 @@
 
+// Zork
 // test subject for Graph interface and dfs
+// ---------------------------------------------------------------------
 
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Set;
 import java.util.ArrayList;
-import java.util.Stack;
-import java.util.HashSet;
 
 
-
-// A Graph interface
-// getEdges and getDestination are sufficient to run a depth-first-search.
-interface Graph<N, E> {
-//    Collection<N> getNodes();
-    Collection<E> getEdges(N node);
-    N getDestination(E edge);
-}
-
-// This class it contains static methods for the Graph interface.
-// In Java 8 though you can put static methods into an interface.
-class Graphs {
-//    static void nothing() {}
-//    static <N> N identity(N node) { return node; }
-//    static <N> N dfs(N node) { return node; }
-//    static <N, E> N dfs(Graph<N, E> g, N start, N find) { return start; }
-
-    static <N, E> N dfs(Graph<N, E> g, N start, N find) {
-        Stack<N> tosee = new Stack<N>();
-        Set<N> seen = new HashSet<N>();
-        tosee.push(start);
-        while (!tosee.empty()) {
-            N n = tosee.pop();
-            System.out.println("visiting " + n);
-            if (n.equals(find)) return n;
-            seen.add(n);
-            // adding from left to right, so will be searched right to left - change if that's an issue
-            for (E e : g.getEdges(n)) {
-                N dest = g.getDestination(e);
-                if (!seen.contains(dest)) {
-                    tosee.push(dest);
-                }
-            }
-        }
-        // can't do due to type erasure...?
-//        return new N("NullObject");
-        return null;
-    }
-//    static <N, E> String asString(Graph<N, E> g) {
-//        StringBuilder sb = new StringBuilder();
-//        for (N n : g.getNodes()) {
-//            sb.append(n + "->" + g.getEdges(n) + "\n");
-//        }
-//        return sb.toString();
-//    }
-}
-
-
-
-// ----------- Zork
 
 class Room {
+    // data
     public String name;
-    List<Exit> exits = new ArrayList<Exit>();
+    Collection<Exit> exits = new ArrayList<Exit>();
+    // constructor
     public Room(String name) { this.name = name; }
-    public String toString() { return this.name; }
-    //        public Exit addExit(Room destination) { return addExit(destination, 0); }
+    // methods
     public Exit addExit(Room destination, int cost) {
         Exit exit = new Exit(destination, cost);
         exits.add(exit);
         return exit;
     }
+//    public Exit addExit(Room destination) { return addExit(destination, 0); }
+    public String toString() { return this.name; }
 }
 
-  class Exit {
+
+class Exit {
+    // data
     public int cost;
     public Room destination;
+    // constructor
     public Exit(Room destination, int cost) { this.destination = destination; this.cost = cost; }
+    // methods
     public Room getDestination() { return destination; }
     public String toString() { return destination.toString(); }
 }
@@ -87,17 +42,18 @@ class Room {
 public class Zork implements Graph<Room, Exit> {
 
     // data
-    List<Room> rooms = new ArrayList<Room>();
+    Collection<Room> rooms = new ArrayList<Room>();
+
 
     // methods
-    public List<Room> getRooms() { return rooms; }
-    public List<Exit> getExits(Room room) { return room.exits; }
+    public Collection<Room> getRooms() { return rooms; }
+    public Collection<Exit> getExits(Room room) { return room.exits; }
 
-    // is it better to have addRoom(name, desc, ...) or addRoom(room object) ?
-    // same with addEdge.
-
-//    public void addRoom(Room room) { rooms.add(room); }
-    public Room addRoom(String name) { Room room = new Room(name); rooms.add(room); return room; }
+    public Room addRoom(String name) {
+        Room room = new Room(name);
+        rooms.add(room);
+        return room;
+    }
 
     public Exit addExit(Room source, Room destination, int cost) {
         Exit exit = source.addExit(destination, cost);
@@ -105,21 +61,18 @@ public class Zork implements Graph<Room, Exit> {
     }
     public Exit addExit(Room source, Room destination) { return addExit(source, destination, 0); }
 
-//    public String toString() { return Graphs.asString(this); }
+    public String toString() { return Graphs.asString(this); }
+
 
     // Graph interface
-//    @Override public List<Room> getNodes() { return getRooms(); }
-    @Override public List<Exit> getEdges(Room room) { return getExits(room); }
+    // convert Rooms to Nodes and Exits to Edges
+    @Override public Collection<Room> getNodes() { return getRooms(); }
+    @Override public Collection<Exit> getEdges(Room room) { return getExits(room); }
     @Override public Room getDestination(Exit exit) { return exit.getDestination(); }
 
 
-
-
-
-    public static void main(String[] args) {
-
-//        Graphs.nothing();
-//        Graphs.identity(new Room("patio"));
+    // testing
+    public static void test() {
 
         Zork z = new Zork();
 
@@ -133,8 +86,11 @@ public class Zork implements Graph<Room, Exit> {
         Room willsoffice = z.addRoom("will's office");
         Room bedroom = z.addRoom("bedroom");
         Room garage = z.addRoom("garage");
+        Room roof = z.addRoom("roof"); // no connection
 
         z.addExit(foyer,hallway);
+        z.addExit(hallway,foyer);
+
         z.addExit(hallway,livingroom);
         z.addExit(hallway,kitchen);
         z.addExit(hallway,stairs);
@@ -145,43 +101,23 @@ public class Zork implements Graph<Room, Exit> {
 
         System.out.println(z);
 
-
         System.out.println("running dfs...");
-        {
-            Room found = Graphs.dfs(z, foyer, willsoffice);
-            assert (found==willsoffice);
-        }
-        {
-            Room attic = z.addRoom("attic"); // no connection
-            Room found = Graphs.dfs(z, foyer, attic); // nullobject
-            assert (found == null);
-        }
+
+        Test.test(Graphs.dfs(z, foyer, willsoffice), willsoffice);
+        Test.test(Graphs.dfs(z, foyer, roof), null);
+
+        // could pass a nullobject
+//        Room notfound = new Room("not found");
+//        Test.test(Graphs.dfs(z, foyer, roof, notfound), null);
 
         System.out.println("done");
     }
 
+
+
+    public static void main(String[] args) {
+        Zork.test();
+    }
 }
 
-
-
-// works - hardcoded types
-//    static Room dfs(Zork g, Room start, Room find) {
-//        Stack<Room> tosee = new Stack<Room>();
-//        Set<Room> seen = new HashSet<Room>();
-//        tosee.push(start);
-//        while (!tosee.empty()) {
-//            Room n = tosee.pop();
-//            System.out.println("visiting " + n);
-//            if (n.equals(find)) return n;
-//            seen.add(n);
-//            // adding from left to right, so will be searched right to left - change if that's an issue
-//            for (Exit e : g.getExits(n)) {
-//                Room dest = g.getDestination(e);
-//                if (!seen.contains(dest)) {
-//                    tosee.push(dest);
-//                }
-//            }
-//        }
-//        return new Room("NullObject");
-//    }
 
