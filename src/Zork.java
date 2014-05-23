@@ -10,16 +10,21 @@ import java.util.Stack;
 import java.util.HashSet;
 
 
+
+// A Graph interface
+// getEdges and getDestination are sufficient to run a depth-first-search.
 interface Graph<N, E> {
-    Collection<N> getNodes();
+//    Collection<N> getNodes();
     Collection<E> getEdges(N node);
     N getDestination(E edge);
 }
 
+// This class it contains static methods for the Graph interface.
+// In Java 8 though you can put static methods into an interface.
 class Graphs {
-    static void nothing() {}
-    static <N> N identity(N node) { return node; }
-    static <N> N dfs(N node) { return node; }
+//    static void nothing() {}
+//    static <N> N identity(N node) { return node; }
+//    static <N> N dfs(N node) { return node; }
 //    static <N, E> N dfs(Graph<N, E> g, N start, N find) { return start; }
 
     static <N, E> N dfs(Graph<N, E> g, N start, N find) {
@@ -43,20 +48,22 @@ class Graphs {
 //        return new N("NullObject");
         return null;
     }
-    static <N, E> String asString(Graph<N, E> g) {
-        StringBuilder sb = new StringBuilder();
-        for (N n : g.getNodes()) {
-            sb.append(n + "->" + g.getEdges(n) + "\n");
-        }
-        return sb.toString();
-    }
+//    static <N, E> String asString(Graph<N, E> g) {
+//        StringBuilder sb = new StringBuilder();
+//        for (N n : g.getNodes()) {
+//            sb.append(n + "->" + g.getEdges(n) + "\n");
+//        }
+//        return sb.toString();
+//    }
 }
 
 
-  class Room {
+
+// ----------- Zork
+
+class Room {
     public String name;
     List<Exit> exits = new ArrayList<Exit>();
-    //        public Room() {};
     public Room(String name) { this.name = name; }
     public String toString() { return this.name; }
     //        public Exit addExit(Room destination) { return addExit(destination, 0); }
@@ -70,20 +77,24 @@ class Graphs {
   class Exit {
     public int cost;
     public Room destination;
-    //        public Exit() {};
     public Exit(Room destination, int cost) { this.destination = destination; this.cost = cost; }
     public Room getDestination() { return destination; }
     public String toString() { return destination.toString(); }
 }
 
 
+
 public class Zork implements Graph<Room, Exit> {
 
+    // data
     List<Room> rooms = new ArrayList<Room>();
 
     // methods
     public List<Room> getRooms() { return rooms; }
     public List<Exit> getExits(Room room) { return room.exits; }
+
+    // is it better to have addRoom(name, desc, ...) or addRoom(room object) ?
+    // same with addEdge.
 
 //    public void addRoom(Room room) { rooms.add(room); }
     public Room addRoom(String name) { Room room = new Room(name); rooms.add(room); return room; }
@@ -94,21 +105,12 @@ public class Zork implements Graph<Room, Exit> {
     }
     public Exit addExit(Room source, Room destination) { return addExit(source, destination, 0); }
 
-    public String toString() {
-        return Graphs.asString(this);
-//        StringBuilder sb = new StringBuilder();
-//        for (Room room : getRooms()) {
-//            sb.append(room + "->" + getExits(room) + "\n");
-//        }
-//        return sb.toString();
-    }
+//    public String toString() { return Graphs.asString(this); }
 
     // Graph interface
-    @Override public List<Room> getNodes() { return getRooms(); }
-//    @Override public List<Exit> getEdges(Room room) { return getExits(room); }
-    @Override public List<Exit> getEdges(Room room) { return room.exits; }
+//    @Override public List<Room> getNodes() { return getRooms(); }
+    @Override public List<Exit> getEdges(Room room) { return getExits(room); }
     @Override public Room getDestination(Exit exit) { return exit.getDestination(); }
-
 
 
 
