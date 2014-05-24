@@ -8,42 +8,12 @@ import java.util.Collection;
 import java.util.ArrayList;
 
 
-
-class Room {
-    // data
-    public String name;
-    Collection<Exit> exits = new ArrayList<Exit>();
-    // constructor
-    public Room(String name) { this.name = name; }
-    // methods
-    public Exit addExit(Room destination, int cost) {
-        Exit exit = new Exit(destination, cost);
-        exits.add(exit);
-        return exit;
-    }
-//    public Exit addExit(Room destination) { return addExit(destination, 0); }
-    public String toString() { return this.name; }
-}
-
-
-class Exit {
-    // data
-    public int cost;
-    public Room destination;
-    // constructor
-    public Exit(Room destination, int cost) { this.destination = destination; this.cost = cost; }
-    // methods
-    public Room getDestination() { return destination; }
-    public String toString() { return destination.toString(); }
-}
-
-
-
-public class Zork implements Graph<Room, Exit> {
+// A map of locations - rooms and connections between them.
+// A room has a set of exits, which is just a list of other rooms.
+public class Zork implements Graph<Zork.Room, Zork.Exit> {
 
     // data
-    Collection<Room> rooms = new ArrayList<Room>();
-
+    private Collection<Room> rooms = new ArrayList<Room>();
 
     // methods
     public Collection<Room> getRooms() { return rooms; }
@@ -61,7 +31,8 @@ public class Zork implements Graph<Room, Exit> {
     }
     public Exit addExit(Room source, Room destination) { return addExit(source, destination, 0); }
 
-    public String toString() { return Graphs.asString(this); }
+//    public String toString() { return Graphs.asString(this); }
+    public String toString() { return Graphs.asGraphviz(this); }
 
 
     // Graph interface
@@ -69,6 +40,39 @@ public class Zork implements Graph<Room, Exit> {
     @Override public Collection<Room> getNodes() { return getRooms(); }
     @Override public Collection<Exit> getEdges(Room room) { return getExits(room); }
     @Override public Room getDestination(Exit exit) { return exit.getDestination(); }
+
+
+
+
+    class Room {
+        // data
+        private String name;
+        private Collection<Exit> exits = new ArrayList<Exit>();
+        // constructor
+        public Room(String name) { this.name = name; }
+        // methods
+        public Exit addExit(Room destination, int cost) {
+            Exit exit = new Exit(destination, cost);
+            exits.add(exit);
+            return exit;
+        }
+        //    public Exit addExit(Room destination) { return addExit(destination, 0); }
+        public String toString() { return this.name; }
+    }
+
+
+
+    class Exit {
+        // data
+        private Room destination;
+        private int cost;
+        // constructor
+        public Exit(Room destination, int cost) { this.destination = destination; this.cost = cost; }
+        // methods
+        public Room getDestination() { return destination; }
+        public String toString() { return destination.toString(); }
+    }
+
 
 
     // testing
@@ -85,6 +89,9 @@ public class Zork implements Graph<Room, Exit> {
         Room sarahsoffice = z.addRoom("sarah's office");
         Room willsoffice = z.addRoom("will's office");
         Room bedroom = z.addRoom("bedroom");
+        Room backporch = z.addRoom("backporch");
+        Room backyard = z.addRoom("backyard");
+        Room shed = z.addRoom("shed");
         Room garage = z.addRoom("garage");
         Room roof = z.addRoom("roof"); // no connection
 
@@ -98,17 +105,26 @@ public class Zork implements Graph<Room, Exit> {
         z.addExit(upstairshall,sarahsoffice);
         z.addExit(upstairshall,willsoffice);
         z.addExit(upstairshall,bedroom);
+        z.addExit(kitchen,backporch);
+        z.addExit(backporch,backyard);
+        z.addExit(backyard,shed);
+        z.addExit(backyard,garage);
+
 
         System.out.println(z);
 
-        System.out.println("running dfs...");
 
+        System.out.println("running dfs...");
         Test.test(Graphs.dfs(z, foyer, willsoffice), willsoffice);
         Test.test(Graphs.dfs(z, foyer, roof), null);
-
-        // could pass a nullobject
+        // could pass a nullobject?
 //        Room notfound = new Room("not found");
 //        Test.test(Graphs.dfs(z, foyer, roof, notfound), null);
+
+        System.out.println("running bfs...");
+        Test.test(Graphs.bfs(z, foyer, willsoffice), willsoffice);
+        Test.test(Graphs.bfs(z, foyer, roof), null);
+
 
         System.out.println("done");
     }
