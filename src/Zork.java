@@ -31,8 +31,8 @@ public class Zork implements Graph<Zork.Room, Zork.Exit> {
     }
     public Exit addExit(Room source, Room destination) { return addExit(source, destination, 0); }
 
-//    public String toString() { return Graphs.asString(this); }
-    public String toString() { return Graphs.asGraphviz(this); }
+//    public String toString() { return Graph.asString(this); }
+    public String toString() { return Graph.asGraphviz(this); }
 
 
     // Graph interface
@@ -115,15 +115,15 @@ public class Zork implements Graph<Zork.Room, Zork.Exit> {
 
 
         System.out.println("running dfs...");
-        Test.test(Graphs.dfs(z, foyer, willsoffice), willsoffice);
-        Test.test(Graphs.dfs(z, foyer, roof), null);
+        Test.test(Graph.dfs(z, foyer, willsoffice), willsoffice);
+        Test.test(Graph.dfs(z, foyer, roof), null);
         // could pass a nullobject?
 //        Room notfound = new Room("not found");
-//        Test.test(Graphs.dfs(z, foyer, roof, notfound), null);
+//        Test.test(Graph.dfs(z, foyer, roof, notfound), null);
 
         System.out.println("running bfs...");
-        Test.test(Graphs.bfs(z, foyer, willsoffice), willsoffice);
-        Test.test(Graphs.bfs(z, foyer, roof), null);
+        Test.test(Graph.bfs(z, foyer, willsoffice), willsoffice);
+        Test.test(Graph.bfs(z, foyer, roof), null);
 
 
         System.out.println("done");
