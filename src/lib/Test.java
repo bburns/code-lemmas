@@ -84,6 +84,8 @@ public class Test {
     }
 
 
+    // Test permutations
+
     public static <T> void testPermutations(List<T> list1, List<T> list2, boolean expected, String name) {
         test(permutations(list1, list2), expected, name);
     }
@@ -112,6 +114,9 @@ public class Test {
 
         // example usage
 
+
+        // test
+
         System.out.println("test");
         
         test(1+1, 2, "1+1");
@@ -133,8 +138,9 @@ public class Test {
         testPermutations(Arrays.asList(1,2,3), Arrays.asList(2,3,1), true);
         testPermutations(Arrays.asList(1,2,3), Arrays.asList(3,1,2), true);
         testPermutations(Arrays.asList(1,2,3), Arrays.asList(3,2,1), true);
-        
-        testPermutations(Arrays.asList(1,2,3), Arrays.asList(), false);
+
+//        testPermutations(Arrays.asList(1,2,3), Arrays.asList(), false); // error
+        testPermutations(Arrays.asList(1,2,3), new ArrayList<Integer>(), false);
         testPermutations(Arrays.asList(1,2,3), Arrays.asList(3), false);
         testPermutations(Arrays.asList(1,2,3), Arrays.asList(1,1,1), false);
         testPermutations(Arrays.asList(1,2,3), Arrays.asList(1,2,3,4), false);

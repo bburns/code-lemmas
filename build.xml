@@ -83,10 +83,12 @@
   
   
   <!-- Run -->
-  <!-- javac -Xlint:all -Werror %1.java && java -ea %1 -->
+  <!-- need fork for assertions or jar files -->
   <target name="run" depends="compile">
     <!-- <java jar="build/jar/JavaLemmas.jar" fork="true"/> -->
-    <java classname="ds.Trie" classpath="build/classes"/>
+    <java classname="ds.Trie" classpath="build/classes" fork="true">
+      <assertions> <enable/> </assertions>
+    </java>
   </target>
   
   

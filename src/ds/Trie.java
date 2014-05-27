@@ -25,16 +25,19 @@ import static lib.Test.test;
 import static lib.Test.testPermutations;
 
 
-// * Trie
+
+
+// Trie
 // Trie has two nested classes - Node and Nodes.
 public class Trie {
     
     
-    // * Node
+    // Node
     // A Node represents one character and its children.
     // The character can be the end of a word or not. 
     static class Node {
-    
+
+        // data
         char key;
         boolean endofword;
         Nodes children = new Nodes();
@@ -50,13 +53,10 @@ public class Trie {
         }
     
     
-        public String toString() {
-            return Character.toString(key);
-            // return children.toString();
-            // return Character.toString(key) + children.toString();
-        }
-        
-    
+        public String toString() { return Character.toString(key); }
+
+
+        // add a child node containing the given character
         public Node addChildNode(char c) {
             //. what if exists?
             Node node = getChildNode(c);
