@@ -59,10 +59,35 @@ public class GraphTest {
 
 
     @Test
-    public void testGetNodes() throws Exception {
+    public void testDFS() throws Exception {
 
-        assertEquals(1,1);
-//        assert(zoo != null);
+//        assertEquals(1,1);
+
+        Room foyer = z.getRoom("foyer");
+        Room willsoffice = z.getRoom("willsoffice");
+        Room roof = z.getRoom("roof");
+
+        System.out.println("running dfs...");
+//        lib.Test.test(Graph.dfs(z, foyer, willsoffice), willsoffice);
+        assertEquals(Graph.dfs(z, foyer, willsoffice), willsoffice);
+
+//        lib.Test.test(Graph.dfs(z, foyer, roof), null);
+        assertEquals(Graph.dfs(z, foyer, roof), null);
+        // could pass a nullobject?
+//        Room notfound = new Room("not found");
+//        Test.test(Graph.dfs(z, foyer, roof, notfound), null);
+    }
+
+    @Test
+    public void testBFS() throws Exception {
+
+        Room foyer = z.getRoom("foyer");
+        Room willsoffice = z.getRoom("willsoffice");
+        Room roof = z.getRoom("roof");
+
+        System.out.println("running bfs...");
+        assertEquals(Graph.bfs(z, foyer, willsoffice), willsoffice);
+        assertEquals(Graph.bfs(z, foyer, roof), null);
 
     }
     

@@ -30,6 +30,10 @@ public class Zork implements Graph<Zork.Room, Zork.Exit> {
         rooms.add(room);
         return room;
     }
+    public Room getRoom(String name) {
+        for (Room r : rooms) if (name.equals(r.name)) return r;
+        return null; //. use nullobject
+    }
 
     public Exit addExit(Room source, Room destination, int cost) {
         Exit exit = source.addExit(destination, cost);
@@ -62,6 +66,9 @@ public class Zork implements Graph<Zork.Room, Zork.Exit> {
             exits.add(exit);
             return exit;
         }
+        public boolean equals(Room other) {
+            return (name.equals(other.name));
+        }
         //    public Exit addExit(Room destination) { return addExit(destination, 0); }
         public String toString() { return this.name; }
     }
@@ -85,6 +92,16 @@ public class Zork implements Graph<Zork.Room, Zork.Exit> {
     public static void test() {
 
         Zork z = new Zork();
+
+        {
+            Room foyer = z.addRoom("foyer");
+            Room hallway = z.addRoom("hallway");
+            Test.test(foyer.equals(hallway), false);
+//            Room foyer2 = z.addRoom("foyer");
+//            Test.test(foyer.equals(foyer2), true);
+            Room r = z.getRoom("hallway");
+            Test.test(r.equals(hallway));
+        }
 
         Room foyer = z.addRoom("foyer");
         Room hallway = z.addRoom("hallway");
