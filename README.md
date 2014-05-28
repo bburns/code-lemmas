@@ -1,6 +1,6 @@
 
 
-Implementation of some interesting data structures and algorithms. 
+Implementation of a few data structures and algorithms. 
 
 Trie
 Hash

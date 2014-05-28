@@ -4,6 +4,12 @@
 // ---------------------------------------------------------------------
 
 
+
+package adt;
+
+
+import lib.Test;
+
 import java.util.Collection;
 import java.util.ArrayList;
 
@@ -13,7 +19,7 @@ import java.util.ArrayList;
 public class Zork implements Graph<Zork.Room, Zork.Exit> {
 
     // data
-    private Collection<Room> rooms = new ArrayList<Room>();
+    private Collection<Room> rooms = new ArrayList<>();
 
     // methods
     public Collection<Room> getRooms() { return rooms; }
@@ -47,7 +53,7 @@ public class Zork implements Graph<Zork.Room, Zork.Exit> {
     class Room {
         // data
         private String name;
-        private Collection<Exit> exits = new ArrayList<Exit>();
+        private Collection<Exit> exits = new ArrayList<>();
         // constructor
         public Room(String name) { this.name = name; }
         // methods

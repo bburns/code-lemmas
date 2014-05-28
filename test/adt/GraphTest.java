@@ -1,0 +1,74 @@
+
+
+
+package adt;
+
+
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+
+//import static test.adt.Zork.*;
+//import Zork.Room;
+import adt.Zork.Room;
+
+
+
+public class GraphTest {
+
+    Zork z;
+
+    @Before
+    public void setUp() throws Exception {
+
+        z = new Zork();
+
+        Room foyer = z.addRoom("foyer");
+        Room hallway = z.addRoom("hallway");
+        Room upstairshall = z.addRoom("upstairs hall");
+        Room livingroom = z.addRoom("livingroom");
+        Room kitchen = z.addRoom("kitchen");
+        Room stairs = z.addRoom("stairs");
+        Room sarahsoffice = z.addRoom("sarah's office");
+        Room willsoffice = z.addRoom("will's office");
+        Room bedroom = z.addRoom("bedroom");
+        Room backporch = z.addRoom("backporch");
+        Room backyard = z.addRoom("backyard");
+        Room shed = z.addRoom("shed");
+        Room garage = z.addRoom("garage");
+        Room roof = z.addRoom("roof"); // no connection
+
+        z.addExit(foyer,hallway);
+        z.addExit(hallway,foyer);
+        z.addExit(hallway,livingroom);
+        z.addExit(hallway,kitchen);
+        z.addExit(hallway,stairs);
+        z.addExit(stairs,upstairshall);
+        z.addExit(upstairshall,sarahsoffice);
+        z.addExit(upstairshall,willsoffice);
+        z.addExit(upstairshall,bedroom);
+        z.addExit(kitchen,backporch);
+        z.addExit(backporch,backyard);
+        z.addExit(backyard,shed);
+        z.addExit(backyard,garage);
+
+        System.out.println(z);
+    }
+
+
+    @Test
+    public void testGetNodes() throws Exception {
+
+        assertEquals(1,1);
+//        assert(zoo != null);
+
+    }
+    
+    
+//    @Test public void testA() throws Exception { assertEquals(1,1); }
+//    @Test public void testB() throws Exception { assertEquals(1,0); }
+//    @Test public void testC() throws Exception { assertEquals(1,0); }
+
+}
