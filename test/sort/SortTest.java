@@ -18,32 +18,32 @@ import static java.util.Arrays.asList;
 
 public class SortTest {
 
-    List<Integer> unsorted = asList(2,1,5,3,0);
-
-
     // test if a list is sorted
-    public boolean isSorted(List<Integer> list) {
+    public <T extends Comparable<? super T>> boolean isSorted(List<T> list) {
         for (int i=0; i < list.size()-1; i++) {
-            if (list.get(i) > list.get(i+1)) return false;
+            if (list.get(i).compareTo(list.get(i+1)) > 0) return false; // list[i] > list[i+1]
         }
         return true;
     }
 
 
-    @Before
-    public void setUp() throws Exception {
+    @Before public void setUp() throws Exception {}
+
+
+    @Test
+    public void testBubbleInts() throws Exception {
+        List<Integer> in = asList(2, 1, 5, 3, 0);
+        List<Integer> out = Sort.bubble(in);
+        assertTrue(isSorted(out));
     }
 
     @Test
-    public void testBubbleSort() throws Exception {
-        // test with increasing sequences of numbers - [], [2], [2,1], ...
-        int n = unsorted.size();
-        for (int i = 0; i < n+1; i++) {
-            List<Integer> in = unsorted.subList(0, i); // end index is exclusive
-            List<Integer> out = Sort.bubble(in);
-            assertTrue(isSorted(out));
-        }
+    public void testBubbleStrings() throws Exception {
+        List<String> in = asList("marsh", "lake", "river", "pond", "creek");
+        List<String> out = Sort.bubble(in);
+        assertTrue(isSorted(out));
     }
+
 
 }
 
