@@ -1,14 +1,7 @@
 
-/*
-Trie data structure
-Add strings to trie, build structure letter by letter.
---------------------------------------------------------------------------------
-*/
-
-// (keymap-set-local "<f5>" (lambda () (interactive) (file-save) (shell-command "cd../.. && ant run")))
-// (keymap-set-local "<f5>" (lambda () (interactive) (file-save) (shell-command "cd../.. && ant") (shell-command "cd../.. && java -cp build/classes ds.Trie")))
-// (keymap-set-local "<f5>" (lambda () (interactive) (file-save) (shell-command "cd../.. && ant") (shell-command (concat "cd../.. && java -cp build/classes ds." (file-title))))
-
+// Trie data structure
+// Add words to trie, easily retrieve list of words matching certain prefix.
+// --------------------------------------------------------------------------------
 
 package ds;
 
@@ -19,46 +12,50 @@ import java.util.HashMap;
 import java.util.Arrays;
 import java.util.Collections;
 
-// import lib.Test;
-// import static Test.test;
-import static lib.Test.test;
-import static lib.Test.testPermutations;
+//import static lib.Test.test;
 
 
-
-
+// ----------------------------------------------------
 // Trie
-// Trie has two nested classes - Node and Nodes.
+// ----------------------------------------------------
+// Trie has two nested classes - Node and Nodes
+
 public class Trie {
-    
-    
-    // Node
+
+    // ----------------------------------------------------
+    // Node class
+    // ----------------------------------------------------
     // A Node represents one character and its children.
     // The character can be the end of a word or not. 
-    static class Node {
+    private static class Node {
 
-        // data
-        char key;
-        boolean endofword;
-        Nodes children = new Nodes();
-        
-    
-        // constructors
+        // -----------------
+        // Attributes
+        // -----------------
+
+        private char key;
+        private boolean endofword;
+        private Nodes children = new Nodes();
+
+
+        // -----------------
+        // Constructors
+        // -----------------
+
         public Node() {
             this.key = '/';
         }
-    
+
         public Node(char key) {
             this.key = key;
         }
-    
-    
-        public String toString() { return Character.toString(key); }
 
+        // -----------------
+        // Methods
+        // -----------------
 
-        // add a child node containing the given character
-        public Node addChildNode(char c) {
-            //. what if exists?
+        // Add a child node containing the given character
+        private Node addChildNode(char c) {
             Node node = getChildNode(c);
             if (node==null) {
                 node = new Node(c);
@@ -66,8 +63,9 @@ public class Trie {
             }
             return node;
         }
-    
-        public void addWord(String s) {
+
+        // Add a word starting at this node by iterating through child nodes
+        private void addWord(String s) {
             Node n = this;
             int nchars = s.length();
             for (int i=0; i < nchars; i++) {
@@ -76,15 +74,16 @@ public class Trie {
                 if (i==nchars-1) n.endofword = true;
             }
         }
-    
-        public Node getChildNode(char c) {
-            //. what if not found? throw error?
-            // map will return null
+
+        // Get the child node associated with the given character.
+        // Map returns null if not found, so we'll follow that convention.
+        private Node getChildNode(char c) {
             return children.get(c);
         }
 
-        // find node following characters in string
-        public Node findNode(String s) {
+        // Find node by following characters in string.
+        // If passed empty string, will return this node.
+        private Node findNode(String s) {
             Node n = this;
             int nchars = s.length();
             for (int i=0; i < nchars; i++) {
@@ -94,168 +93,121 @@ public class Trie {
             }
             return n;
         }
-    
-        // get all words including and below this node, prefixed with given string.
-        // adds them to the list, passed by reference.
-        public void getWordsRecurse(String prefix, ArrayList<String> list) {
+
+        // Get all words including and below this node, prefixed with given string,
+        // and add them to the given list.
+        private void getWordsRecurse(String prefix, List<String> words) {
             for (Node n : children.values()) {
                 String nodestring = prefix + n.key;
-                if (n.endofword) list.add(nodestring);
-                if (n.children.size()>0) n.getWordsRecurse(nodestring, list);
+                if (n.endofword) words.add(nodestring);
+                if (n.children.size()>0) n.getWordsRecurse(nodestring, words);
             }
         }
 
-        // get all words starting with the given prefix.
-        // find the node corresponding to the prefix, then gather up all the child words.
-        public ArrayList<String> getWords(String prefix) {
-            ArrayList<String> list = new ArrayList<String>();
+        // Get all words starting with the given prefix.
+        // Find the node corresponding to the prefix, then gather up all the child words.
+        private List<String> getWords(String prefix) {
+            List<String> words = new ArrayList<>();
             Node node = findNode(prefix);
             if (node!=null) {
-                if (node.endofword) list.add(prefix);
-                node.getWordsRecurse(prefix, list);
+                if (node.endofword) words.add(prefix);
+                node.getWordsRecurse(prefix, words);
             }
-            return list;
+            return words;
         }
-    
-        
-        // public static void main(String[] args) {
-        public static void runtests() {
-            System.out.println("Hello node");
-        
-            Node root = new Node();
-        
-            Node n;
-        
-            // addChildNode
-            n = root.addChildNode('i');
-            test(n.key, 'i');
-            root.addChildNode('r');
-            root.addChildNode('r');
-        
-            // getChildNode
-            n = root.getChildNode('r');
-            test(n.key, 'r');
-            n = root.getChildNode('z');
-            test(n, null);
-             
-            // addWord
-            root.addWord("i");
-            n = root.getChildNode('i');
-            test(n.key,'i');
-            test(n.endofword);
-        
-            root.addWord("red");
-        
-            // getChildren
-            // // for (Node child : n.children())
-            // Nodes children = root.getChildren();
-            // // assert (children.size() == 2);
-            // for (n : children.values()) {
-            //     System.out.println(n);
-            // }
-        
-            // findNode
-            n = root.findNode("re");
-            test(n.key,'e');
-            test(n.endofword,false);
-        
-            n = root.findNode("zork");
-            test(n,null);
-        
-        
-            // getWords
-            root.addWord("room");
-            root.addWord("robot");
-            
-            List<String> list;
-            list = root.getWords("red");
-            test(list,"[red]");
-            
-            list = root.getWords("re");
-            test(list,"[red]");
-            
-            list = root.getWords("r");
-            test(list,"[red, robot, room]");
-        
-            
-            System.out.println("done.");
+
+        public String toString() {
+            return Character.toString(key);
         }
+
+
+        // Test the Node class
+        // This class was developed first, but is now an inner class,
+        // so it's less necessary to test, plus it's harder to do with JUnit.
+        // So just uncomment this and run when needed, eg if change anything in class.
+//        public static void testNode() {
+//
+//            Trie.Node root = new Trie.Node();
+//            Trie.Node n;
+//
+//            // addChildNode
+//            n = root.addChildNode('i');
+//            test(n.key, 'i');
+//            root.addChildNode('r');
+//            root.addChildNode('r');
+//
+//            // getChildNode
+//            n = root.getChildNode('r');
+//            test(n.key, 'r');
+//            n = root.getChildNode('z');
+//            test(n, null);
+//
+//            // addWord
+//            root.addWord("i");
+//            n = root.getChildNode('i');
+//            test(n.key,'i');
+//            test(n.endofword);
+//
+//            // findNode
+//            root.addWord("red");
+//            n = root.findNode("re");
+//            test(n.key,'e');
+//            test(n.endofword,false);
+//        }
 
     }
-    
-    
 
-    // * Nodes
-    // an alias for HashMap Character->Node. 
-    @SuppressWarnings("serial") // why?
-    static class Nodes extends HashMap<Character, Node> {
+
+
+    //-------------------------------------------------------------
+    // Nodes class
+    //-------------------------------------------------------------
+
+    // Nodes is just a map from Character to Node
+    @SuppressWarnings("serial") //. why?
+    private static class Nodes extends HashMap<Character, Node> {
         Node addNode(Character k, Node v) {
             return put(k,v);
         }
     }
 
-    
-    
-    // Trie attributes and methods
-    
+
+
+    //-------------------------------------------------------------
+    // Trie class
+    //-------------------------------------------------------------
+
+    //---------------------------
+    // Attributes
+    //---------------------------
+
+    // A trie always has a root node
     Node root = new Node();
-    
+
+    //---------------------------
+    // Methods
+    //---------------------------
+
+    // Add a word to the trie
     public void addWord(String word) {
         root.addWord(word);
     }
-    
-    public ArrayList<String> getWords(String startingWith) {
-        // return root.getWords(startingWith);
-        // sort
-        ArrayList<String> words = root.getWords(startingWith);
+
+    // Get a sorted list of words starting with the given prefix string
+    public List<String> getWords(String startingWith) {
+        List<String> words = root.getWords(startingWith);
         Collections.sort(words); // in place sort
         return words;
     }
-        
-    
-    public static void runtests() {
-        System.out.println("Hello trie");
-        
-        Trie t = new Trie();
-        // System.out.println(t);
-        
-        t.addWord("i");
-        t.addWord("if");
-        t.addWord("in");
-        t.addWord("info");
-        t.addWord("into");
-        t.addWord("red");
-        t.addWord("robot");
-        t.addWord("room");
-        
-        // results in no particular order, so test permutations
-        // oh. could have sorted them. as we would want to. 
-        // System.out.println(t.getWords(""));
-        test(t.getWords(""), "[i, if, in, info, into, red, robot, room]"); // all words
-        test(t.getWords("i"), "[i, if, in, info, into]");
-        test(t.getWords("in"), "[in, info, into]");
-        test(t.getWords("if"), "[if]");
-        test(t.getWords("inz"), "[]");
-        test(t.getWords("is"), "[]");
-        test(t.getWords("r"), "[red, robot, room]");
-        test(t.getWords("rooms"), "[]");
-        test(t.getWords("ra"), "[]");
-        test(t.getWords("z"), "[]");
 
-        // testPermutations(t.getWords("in"), Arrays.asList("in","info","into"));
-        // testPermutations(t.getWords("i"), Arrays.asList("i","if","in","info","into"));
-        // testPermutations(t.getWords(""), Arrays.asList("i","if","in","info","into","red","robot","room")); // all words
-        
+    // Represent trie as an array, eg "[red, root, beer]". Includes all words, sorted.
+    public String toString() {
+        List<String> words = root.getWords("");
+        return words.toString();
     }
-    
-    public static void main(String[] args) {
-        Trie.runtests();
-        Node.runtests();
-        // Nodes.runtests();
-    }
+
+    // to test Node class
+//    public static void main(String[] args) { Node.testNode(); }
+
 }
-
-
-
-
 
