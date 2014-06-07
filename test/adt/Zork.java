@@ -3,15 +3,13 @@
 // test subject for Graph interface and dfs
 // ---------------------------------------------------------------------
 
-
-
 package adt;
 
 
-import lib.Test;
-
 import java.util.Collection;
 import java.util.ArrayList;
+
+import lib.Test;
 
 
 // A map of locations - rooms and connections between them.
