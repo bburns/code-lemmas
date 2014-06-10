@@ -1,7 +1,8 @@
 
-// Trie data structure
-// Add words to trie, easily retrieve list of words matching certain prefix.
-// --------------------------------------------------------------------------------
+// Trie
+// Add words to Trie object, retrieve list of words matching
+// a given prefix.
+// ---------------------------------------------------
 
 package ds;
 
@@ -15,16 +16,11 @@ import java.util.Collections;
 //import static lib.Test.test;
 
 
-// ----------------------------------------------------
-// Trie
-// ----------------------------------------------------
+// Trie class
 // Trie has two nested classes - Node and Nodes
-
 public class Trie {
 
-    // ----------------------------------------------------
     // Node class
-    // ----------------------------------------------------
     // A Node represents one character and its children.
     // The character can be the end of a word or not. 
     private static class Node {
@@ -32,7 +28,6 @@ public class Trie {
         // -----------------
         // Attributes
         // -----------------
-
         private char key;
         private boolean endofword;
         private Nodes children = new Nodes();
@@ -41,14 +36,13 @@ public class Trie {
         // -----------------
         // Constructors
         // -----------------
-
         public Node() {
             this.key = '/';
         }
-
         public Node(char key) {
             this.key = key;
         }
+
 
         // -----------------
         // Methods

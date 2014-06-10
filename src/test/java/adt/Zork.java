@@ -48,6 +48,7 @@ public class Zork implements Graph<Zork.Room, Zork.Exit> {
     @Override public Collection<Room> getNodes() { return getRooms(); }
     @Override public Collection<Exit> getEdges(Room room) { return getExits(room); }
     @Override public Room getDestination(Exit exit) { return exit.getDestination(); }
+    @Override public double getCost(Exit exit) { return 1.0; }
 
 
 
