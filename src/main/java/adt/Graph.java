@@ -141,12 +141,36 @@ interface Graph<N, E> {
 //            if (unvisited.contains(targetNode))
 
             // no neighbors left, so exit
-            if (bestNeighborNode == null) {dStartToTarget = Double.POSITIVE_INFINITY; return dStartToTarget; }
+//            if (bestNeighborNode == null) {dStartToTarget = Double.POSITIVE_INFINITY; return dStartToTarget; }
+
+//            if (dStartToNode < dBestStartToNeighbor) {
+//                dBestStartToNeighbor = dStartToNeighbor;
+//                bestNeighborNode = neighborNode;
+//            }
+
+            // iterate over unvisited nodes
+//            Collection<N> nodes = g.getNodes();
+            double dBest = Double.POSITIVE_INFINITY;
+            N nodeBest = null;
+            for (N node : nodes) {
+                if (unvisited.contains(node)) {
+                    double dStartToNode = m.get(node);
+                    if (dStartToNode < dBest) {
+                        dBest = dStartToNode;
+                        nodeBest = node;
+                    }
+                }
+            }
+            if (nodeBest == null) { return Double.POSITIVE_INFINITY; }
+
+            // go to best node
+            currentNode = nodeBest;
+            dStartToCurrent = m.get(currentNode);
 
             // go to best neighbor
-            currentNode = bestNeighborNode;
-//            dStartToCurrent = dBestStartToNeighbor;
-            dStartToCurrent = m.get(bestNeighborNode);
+//            currentNode = bestNeighborNode;
+////            dStartToCurrent = dBestStartToNeighbor;
+//            dStartToCurrent = m.get(bestNeighborNode);
 
             
         } // while 
@@ -177,12 +201,6 @@ interface Graph<N, E> {
                 if (dStartToCurrentToNeighbor < dStartToNeighbor) {
                     dStartToNeighbor = dStartToCurrentToNeighbor;
                     m.put(neighborNode, dStartToNeighbor);
-                }
-
-                // remember closest neighbor
-                if (dStartToNeighbor < dBestStartToNeighbor) {
-                    dBestStartToNeighbor = dStartToNeighbor;
-                    bestNeighborNode = neighborNode;
                 }
             }
         }
