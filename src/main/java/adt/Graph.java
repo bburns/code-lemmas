@@ -33,7 +33,7 @@ import java.util.ArrayDeque;
 // Graph interface with some static methods
 // ------------------------------------------------------------
 // N for node class, E for edge class
-interface Graph<N, E> {
+public interface Graph<N, E> {
 
     // ------------------------------------------------------------
     // Methods to be implemented

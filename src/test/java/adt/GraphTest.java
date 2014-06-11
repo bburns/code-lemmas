@@ -1,5 +1,5 @@
 
-
+// Test of Graph interface
 
 package adt;
 
@@ -20,8 +20,6 @@ public class GraphTest {
 
     Zork z;
 
-    
-    
     @Before
     public void setUp() throws Exception {
 
