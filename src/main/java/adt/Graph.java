@@ -108,6 +108,9 @@ interface Graph<N, E> {
         // list of all nodes
         Collection<N> nodes = g.getNodes();
 
+        assert(nodes.contains(startNode));
+        assert(nodes.contains(targetNode));
+
         // set start node
         N currentNode = startNode;
         double dStartToCurrent = 0.0;
@@ -119,71 +122,58 @@ interface Graph<N, E> {
         m.put(startNode, 0.0); // start to start is 0
 
         // initialize list of unvisited nodes
-        List<N> unvisited = new ArrayList<>(nodes); // copy
+        List<N> unvisited = new ArrayList<>(nodes); // make copy
 
-        // getStartToTarget()
         double dStartToTarget = Double.POSITIVE_INFINITY;
 
         // search graph until can't reach any more nodes
         // search graph until current node has already been visited
-        while (unvisited.contains(currentNode)) { // exit when current node has already been visited
+//        while (unvisited.contains(currentNode)) { // exit when current node has already been visited
+        while (true) {
 
             // at target?
-            if (currentNode.equals(targetNode)) {dStartToTarget = dStartToCurrent; return dStartToTarget; }
+//            if (currentNode.equals(targetNode)) {dStartToTarget = dStartToCurrent; return dStartToTarget; }
             
-            // find unvisited neighbor node with lowest distance from start
-            N bestNeighborNode = dijkstraGetBestNeighbor(g, currentNode, targetNode, unvisited, dStartToCurrent, m);
+            // update neighbor distances
+            dijkstraUpdateNeighbors(g, currentNode, unvisited, dStartToCurrent, m);
 
             // mark current node as visited
             unvisited.remove(currentNode);
 
-            //
-//            if (unvisited.contains(targetNode))
+            // if target has been visited, return its distance value
+            if (! unvisited.contains(targetNode)) { dStartToTarget = m.get(targetNode); return dStartToTarget; }
 
-            // no neighbors left, so exit
-//            if (bestNeighborNode == null) {dStartToTarget = Double.POSITIVE_INFINITY; return dStartToTarget; }
-
-//            if (dStartToNode < dBestStartToNeighbor) {
-//                dBestStartToNeighbor = dStartToNeighbor;
-//                bestNeighborNode = neighborNode;
-//            }
-
-            // iterate over unvisited nodes
-//            Collection<N> nodes = g.getNodes();
-            double dBest = Double.POSITIVE_INFINITY;
-            N nodeBest = null;
+            // iterate over unvisited nodes to find one with lowest distance
+            double dLowest = Double.POSITIVE_INFINITY;
+            N nodeLowest = null;
             for (N node : nodes) {
                 if (unvisited.contains(node)) {
                     double dStartToNode = m.get(node);
-                    if (dStartToNode < dBest) {
-                        dBest = dStartToNode;
-                        nodeBest = node;
+                    if (dStartToNode < dLowest) {
+                        dLowest = dStartToNode;
+                        nodeLowest = node;
                     }
                 }
             }
-            if (nodeBest == null) { return Double.POSITIVE_INFINITY; }
+            if (nodeLowest == null) { return Double.POSITIVE_INFINITY; }
 
             // go to best node
-            currentNode = nodeBest;
+            currentNode = nodeLowest;
             dStartToCurrent = m.get(currentNode);
 
-            // go to best neighbor
-//            currentNode = bestNeighborNode;
-////            dStartToCurrent = dBestStartToNeighbor;
-//            dStartToCurrent = m.get(bestNeighborNode);
-
-            
-        } // while 
+        } // while
        
-        return dStartToTarget;
+//        return dStartToTarget;
     }
 
 
-    // also updates m
-    static <N, E> N dijkstraGetBestNeighbor(Graph<N, E> g, N currentNode, N targetNode,
-                                            List<N> unvisited, double dStartToCurrent, Map<N, Double> m) {
-        N bestNeighborNode = null;
-        double dBestStartToNeighbor = Double.POSITIVE_INFINITY;
+//    static <N, E> N dijkstraGetBestNeighbor(Graph<N, E> g, N currentNode, N targetNode,
+//                                            List<N> unvisited, double dStartToCurrent, Map<N, Double> m) {
+        static <N, E> void dijkstraUpdateNeighbors(Graph<N, E> g, N currentNode,
+                List<N> unvisited, double dStartToCurrent, Map<N, Double> m) {
+
+//        N bestNeighborNode = null;
+//        double dBestStartToNeighbor = Double.POSITIVE_INFINITY;
 
         // iterate over unvisited neighbors
         Collection<E> edges = g.getEdges(currentNode);
@@ -194,8 +184,7 @@ interface Graph<N, E> {
                 double dStartToNeighbor = m.get(neighborNode);
                 double dCurrentToNeighbor = g.getCost(edge);
                 double dStartToCurrentToNeighbor = dStartToCurrent + dCurrentToNeighbor;
-
-                // System.out.println(neighborNode + " " + dStartToNeighbor + " " + dCurrentToNeighbor + " " + dStartToCurrentToNeighbor);
+                System.out.println(neighborNode + " " + dStartToNeighbor + " " + dCurrentToNeighbor + " " + dStartToCurrentToNeighbor);
 
                 // if found better path to neighbor, update its total distance
                 if (dStartToCurrentToNeighbor < dStartToNeighbor) {
@@ -204,7 +193,7 @@ interface Graph<N, E> {
                 }
             }
         }
-        return bestNeighborNode;
+//        return bestNeighborNode;
     }
 
 

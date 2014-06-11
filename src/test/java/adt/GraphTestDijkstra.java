@@ -101,6 +101,8 @@ public class GraphTestDijkstra {
 
 
     public void assertInfinity(double d) { assertEquals(Double.POSITIVE_INFINITY, d, 0); }
+    public void assertZero(double d) { assertEquals(0, d, 0); }
+    public void assertEquals0(double d0, double d1) { assertEquals(d0, d1, 0); }
 
 
     private double dijkstra(Simple g, Object start, Object target) {
@@ -117,44 +119,32 @@ public class GraphTestDijkstra {
         Simple g = new Simple();
         double d;
 
-//        d = dijkstra(g,0,0);
-        d = dijkstra(g,'a','a');
-//        assertEquals(inf,d,0);
-        assertInfinity(d);
+        // no nodes - illegal
+//        d = dijkstra(g,'a','a');
+//        d = dijkstra(g,'a','b');
 
-//        g.addNode(0);
         g.addNode('a');
-//        d = dijkstra(g,0,0);
         d = dijkstra(g,'a','a');
-        assertEquals(0,d,0);
+        assertZero(d);
+//        d = dijkstra(g,'a','b'); // illegal
 
-//        g.addNode(1);
-//        g.addEdge(0,1,1);
-//        d = dijkstra(g,0,1);
         g.addNode('b');
         g.addEdge('a','b',1);
         d = dijkstra(g,'a','b');
-        assertEquals(1,d,0);
+        assertEquals0(1,d);
 
-//        g.addNode(2);
-//        d = dijkstra(g,0,2);
         g.addNode('c');
         d = dijkstra(g,'a','c');
-//        assertEquals(inf,d,0); // ie can't reach it
-        assertInfinity(d);
+        assertInfinity(d); // ie can't reach it
 
-//        g.addEdge(0,2,2);
-//        System.out.println(g);
-//        d = dijkstra(g,0,2);
         g.addEdge('a','c',2);
+        d = dijkstra(g,'a','c');
+        assertEquals0(2,d);
+
+        g.addEdge('b','c',3);
         System.out.println(g);
         d = dijkstra(g,'a','c');
-        assertEquals(2,d,0);
-
-//        g.addEdge(1,2,3);
-//        System.out.println(g);
-//        d = dijkstra(g,0,2);
-//        assertEquals(2,d,0);
+        assertEquals0(2,d);
 
         // test a cycle
 
