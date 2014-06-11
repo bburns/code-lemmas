@@ -1,10 +1,9 @@
 /*
 Test
 Simple test function - compares actual and expected values as strings. 
-String-based comparisons work for most things. 
--------------------------------------------------------------------------------
+String-based comparisons work for most things.
+
 @author Brian Burns <bburns.km@gmail.com>
-@since 2008-10
 -------------------------------------------------------------------------------
  
 something in between assert and junit - 

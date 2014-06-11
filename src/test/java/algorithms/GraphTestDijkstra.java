@@ -1,12 +1,13 @@
 
-package adt;
+package algorithms;
 
+
+import adt.Graph;
+import ds.GraphUndirected;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-
-import ds.GraphUndirected;
 
 
 public class GraphTestDijkstra {
@@ -23,12 +24,11 @@ public class GraphTestDijkstra {
     private static double dijkstra(GraphUndirected g, Object start, Object target) {
         GraphUndirected.Node nstart = g.findNode(start);
         GraphUndirected.Node ntarget = g.findNode(target);
-        return Graph.dijkstra(g, nstart, ntarget);
+        return Search.dijkstra(g, nstart, ntarget);
     }
 
 
-    @Test
-    public void testDijkstra() throws Exception {
+    @Test public void testDijkstra() throws Exception {
 
         GraphUndirected g = new GraphUndirected();
         double d;

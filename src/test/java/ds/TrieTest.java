@@ -18,8 +18,7 @@ public class TrieTest {
     }
 
 
-    @Test
-    public void testTrie() throws Exception {
+    @Test public void testTrie() throws Exception {
 
         Trie t = new Trie();
 
@@ -51,7 +50,6 @@ public class TrieTest {
         assertString("[i, if, in, info, into, red, robot, room]", t.getWords("")); // all words
 
         assertString("[]", t.getWords("z"));
-
 
         // re-add a word
         t.addWord("room");

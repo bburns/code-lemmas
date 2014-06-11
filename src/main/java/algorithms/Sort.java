@@ -2,7 +2,7 @@
 // Sort algorithms
 
 
-package sort;
+package algorithms;
 
 
 import java.util.List;
