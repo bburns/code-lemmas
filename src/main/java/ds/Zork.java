@@ -3,7 +3,7 @@
 // test subject for Graph interface and dfs
 // ---------------------------------------------------------------------
 
-package algorithms;
+package ds;
 
 
 import java.util.Collection;
