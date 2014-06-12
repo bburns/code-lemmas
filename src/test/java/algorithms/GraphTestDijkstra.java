@@ -4,6 +4,7 @@ package algorithms;
 
 import adt.Graph;
 import ds.GraphUndirected;
+import static test.Test.*;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -13,11 +14,6 @@ import static org.junit.Assert.*;
 public class GraphTestDijkstra {
 
 //    static class GraphUndirected {}
-
-    public static void assertInfinity(double d) { assertEquals(Double.POSITIVE_INFINITY, d, 0); }
-    public static void assertZero(double d) { assertEquals(0, d, 0); }
-    public static void assertEquals0(double d0, double d1) { assertEquals(d0, d1, 0); }
-
 
     // Get shortest distance from start to target in given graph.
     // Just a wrapper around Graph.dijkstra.

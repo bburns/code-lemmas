@@ -1,14 +1,13 @@
-
+// ------------------------------------------------------------
 // A Graph interface with nodes and edges, and some
-// static methods - dfs, bfs, asString, asGraphviz.
+// static methods - asString, asGraphviz.
 //
-// For example,
+// eg
 // static class Places implements Graph<String, Places.Road> {
 //    @Override public Collection<Room> getNodes() { return getRooms(); }
+//    ...
+// ------------------------------------------------------------
 
-
-
-// ---------------------------------------------------
 
 package adt;
 
@@ -20,6 +19,7 @@ import java.util.Collection;
 // Graph interface with some static methods
 // ------------------------------------------------------------
 // N for node class, E for edge class
+
 public interface Graph<N, E> {
 
     // ------------------------------------------------------------

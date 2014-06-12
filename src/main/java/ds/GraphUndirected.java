@@ -1,5 +1,9 @@
 
-// A simple undirected graph class.
+// GraphUndirected
+// A simple undirected graph class, implementing the Graph interface.
+// Nodes just store an Object value.
+// Edges have a cost associated with them.
+// -------------------------------------------------------------------------------------------
 
 
 package ds;
@@ -11,9 +15,6 @@ import java.util.List;
 import java.util.ArrayList;
 
 
-// A simple undirected graph class, implementing the adt.Graph interface.
-// Nodes store an Object value.
-// Edges have a cost associated with them.
 public class GraphUndirected implements Graph<GraphUndirected.Node, GraphUndirected.Edge> {
 
     static Node nodeNothing = new Node("Nothing"); // nullobject

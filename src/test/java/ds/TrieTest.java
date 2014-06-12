@@ -3,19 +3,13 @@
 
 package ds;
 
+import static test.Test.*;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 
 public class TrieTest {
-
-    // compare string representation of object with given string, and assert equals
-    public static void assertString(String expected, Object actual) {
-        assertEquals(expected, actual.toString());
-    }
-    public static void assertString(String message, String expected, Object actual) {
-        assertEquals(message, expected, actual.toString());
-    }
 
 
     @Test public void testTrie() throws Exception {

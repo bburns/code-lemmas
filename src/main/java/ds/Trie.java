@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Arrays;
 import java.util.Collections;
 
-//import static lib.Test.test;
+//import static test.Test.test;
 
 
 // Trie class
