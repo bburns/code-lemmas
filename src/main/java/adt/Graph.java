@@ -1,13 +1,7 @@
 // ------------------------------------------------------------
-// A Graph interface with nodes and edges, and some
-// static methods - asString, asGraphviz.
-//
-// eg
-// static class Places implements Graph<String, Places.Road> {
-//    @Override public Collection<Room> getNodes() { return getRooms(); }
-//    ...
+// A Graph interface with nodes and edges,
+// and some static methods - asString, asGraphviz.
 // ------------------------------------------------------------
-
 
 package adt;
 
@@ -30,6 +24,13 @@ public interface Graph<N, E> {
     N getDestination(E edge);
     double getCost(E edge);
 
+    // N addNode(N node);
+    // E addEdge(N src, N dst);
+    // E addEdge(N src, N dst, double cost);
+    boolean addNode(N node);
+    boolean addEdge(N src, N dst);
+    boolean addEdge(N src, N dst, double cost);
+    
 
     // ------------------------------------------------------------
     // asString
