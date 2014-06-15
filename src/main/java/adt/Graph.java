@@ -6,7 +6,7 @@
 package adt;
 
 
-import java.util.Collection;
+import java.util.List;
 
 
 // ------------------------------------------------------------
@@ -19,8 +19,9 @@ public interface Graph<N, E> {
     // ------------------------------------------------------------
     // Methods to be implemented
     // ------------------------------------------------------------
-    Collection<N> getNodes();
-    Collection<E> getEdges(N node);
+    List<N> getNodes();
+    List<E> getEdges();
+    List<E> getEdges(N node);
     N getDestination(E edge);
     double getCost(E edge);
 
@@ -53,14 +54,15 @@ public interface Graph<N, E> {
     // ------------------------------------------------------------
     // Return a representation of the graph as a Graphviz dot file.
     // eg
-    // Graph.asGraphviz(g) => "digraph g {a -> b; a -> c; b -> c;}"
-    static <N, E> String asGraphviz(Graph<N, E> g) {
+    // Graph.asGraphviz(g, "->") => "digraph g {a -> b; a -> c; b -> c;}" // directed
+    // Graph.asGraphviz(g, "-") => "digraph g {a - b; a - c; b - c;}" // undirected
+    static <N, E> String asGraphviz(Graph<N, E> g, String delim) {
         StringBuilder sb = new StringBuilder();
         sb.append("digraph g {\n");
         for (N n : g.getNodes()) {
             for (E e : g.getEdges(n)) {
                 N dest = g.getDestination(e);
-                sb.append("    \"" + n + "\" -> \"" + dest + "\";\n");
+                sb.append("    \"" + n + "\"" + delim + "\"" + dest + "\";\n");
             }
         }
         sb.append("}\n");
