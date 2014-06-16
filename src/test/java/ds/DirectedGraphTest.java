@@ -12,11 +12,11 @@ import static org.junit.Assert.*;
 import static java.util.Arrays.asList;
 
 
-public class GraphDirectedTest {
+public class DirectedGraphTest {
     
     @Test public void test() throws Exception {
 
-        GraphDirected<Integer> g = new GraphDirected<>(); // works
+        DirectedGraph<Integer> g = new DirectedGraph<>(); // works
 
         // a triangle
         
@@ -32,8 +32,8 @@ public class GraphDirectedTest {
         // System.out.println(g.toGraphviz());
         
         List<Integer> nodes;
-        List<GraphDirected.Edge<Integer>> edges;
-        GraphDirected.Edge<Integer> edge;
+        List<DirectedGraph.Edge<Integer>> edges;
+        DirectedGraph.Edge<Integer> edge;
         
         
         // all nodes
@@ -50,7 +50,7 @@ public class GraphDirectedTest {
         // need to override .equals
         // assertTrue(edges.contains(new GraphDirected.Edge<Integer>(1,2)));
         // GraphDirected.Edge<Integer> e1 = new GraphDirected.Edge<>(0,1);
-        edge = new GraphDirected.Edge<>(0,1);
+        edge = new DirectedGraph.Edge<>(0,1);
         // System.out.println(edge);
         assertTrue(edges.contains(edge));
         assertEquals(edge,edges.get(0)); 
@@ -68,7 +68,7 @@ public class GraphDirectedTest {
         assertEquals(new Integer(0), g.getDestination(edge));
         assertEquals(2.0, g.getCost(edge),0);
         
-        edge = new GraphDirected.Edge<>(1,2);
+        edge = new DirectedGraph.Edge<>(1,2);
         assertFalse(edges.contains(edge));
         
     }

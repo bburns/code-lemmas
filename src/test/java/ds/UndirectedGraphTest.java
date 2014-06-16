@@ -7,9 +7,12 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 
-public class GraphUndirectedTest {
+public class UndirectedGraphTest {
 
     @Test public void test() throws Exception {
+
+
+
     }
 
 }

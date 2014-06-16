@@ -6,19 +6,16 @@ package algorithms;
 
 
 //import adt.Graph;
-//import ds.GraphUndirected;
+//import ds.UndirectedGraph;
 //import ds.Zork;
+//import org.junit.Before;
+//import org.junit.Test;
 
+//import static org.junit.Assert.*;
 //import static test.Test.*;
-
-import ds.GraphUndirected;
-import org.junit.Before;
-import org.junit.Test;
-
-import static org.junit.Assert.*;
-import static test.Test.assertEquals0;
-import static test.Test.assertInfinity;
-import static test.Test.assertZero;
+//import static test.Test.assertEquals0;
+//import static test.Test.assertInfinity;
+//import static test.Test.assertZero;
 
 
 

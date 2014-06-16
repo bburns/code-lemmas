@@ -13,12 +13,11 @@ package ds;
 
 import adt.Graph;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.ArrayList;
 
 
-public class GraphDirected<N> implements Graph<N, GraphDirected.Edge<N>> {
+public class DirectedGraph<N> implements Graph<N, DirectedGraph.Edge<N>> {
 
     // set of nodes and edges
     private List<N> nodes = new ArrayList<>();
