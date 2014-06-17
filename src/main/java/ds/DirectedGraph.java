@@ -1,8 +1,13 @@
-
-// GraphDirected
+// -------------------------------------------------------------------------------------------
+// DirectedGraph
 // A simple directed graph class, implementing the Graph interface.
-// Nodes just store an Object value.
 // Edges have a cost associated with them.
+//
+// eg
+// DirectedGraph<Integer> g = new DirectedGraph<>();
+// g.addNode(0);
+// g.addNode(1);
+// g.addEdge(0,1,2.0); // cost 2.0
 // -------------------------------------------------------------------------------------------
 
 
@@ -20,8 +25,8 @@ import java.util.ArrayList;
 public class DirectedGraph<N> implements Graph<N, DirectedGraph.Edge<N>> {
 
     // set of nodes and edges
-    private List<N> nodes = new ArrayList<>();
-    private List<Edge<N>> edges = new ArrayList<>();
+    List<N> nodes = new ArrayList<>();
+    List<Edge<N>> edges = new ArrayList<>();
 
     // Graph interface
 
@@ -32,35 +37,36 @@ public class DirectedGraph<N> implements Graph<N, DirectedGraph.Edge<N>> {
     @Override public List<N> getNodes() { return nodes; }
     @Override public List<Edge<N>> getEdges() {return edges; } 
     @Override public List<Edge<N>> getEdges(N node) {
-        // TODO try lambda
+        // TODO try a lambda
         // TODO use index or multimap for speed
         List<Edge<N>> list = new ArrayList<>();
-        for (Edge edge : edges) { if (edge.src.equals(node)) { list.add(edge); } }
+        for (Edge<N> edge : edges) { if (edge.src.equals(node)) { list.add(edge); } }
         return list;
     }
     
+    @Override public N getSource(Edge<N> edge) { return edge.src; }
     @Override public N getDestination(Edge<N> edge) { return edge.dst; }
     @Override public double getCost(Edge<N> edge) { return edge.cost; }
 
     
+    
     // representations
     public String toString() { return Graph.asString(this); }
-    public String toGraphviz() { return Graph.asGraphviz(this, "->"); }
+    public String toGraphviz() { return Graph.asGraphviz(this, true); }
 
     
     // Edges have an optional associated cost
     static class Edge<N> {
-        private N src;
-        private N dst;
-        private double cost;
+        N src;
+        N dst;
+        double cost;
         Edge(N src, N dst) { this.src = src; this.dst = dst; this.cost = 1; } // constructor
         Edge(N src, N dst, double cost) { this.src = src; this.dst = dst; this.cost = cost; } // constructor
-        // public String toString () { return dst + "(" + cost + ")"; } // used by Graph.asString
-        @Override public String toString () { return src + "->" + dst + "(" + cost + ")"; } // used by Graph.asString
+        @Override public String toString () { return dst.toString(); } // used by Graph.asString
         
-        // @Override public boolean equals (@SuppressWarnings("unchecked") Object other) { 
-        @Override @SuppressWarnings("unchecked") public boolean equals (Object other) {
-            Edge<?> e = (Edge<?>) other; 
+        // @Override @SuppressWarnings("unchecked") public boolean equals (Object other) {
+        @Override public boolean equals (Object other) {
+            Edge<?> e = (Edge<?>) other; // warning if use Edge<N> - unchecked method invocation
             if (other == null) {return false;}
             if (this.getClass() != other.getClass()) {return false;}
             if (!this.src.equals(e.src)) {return false;}

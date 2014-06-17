@@ -1,7 +1,10 @@
-// ------------------------------------------------------------
-// A Graph interface with nodes and edges,
-// and some static methods - asString, asGraphviz.
-// ------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
+// A Graph interface with nodes and edges, and some static methods.
+//
+// The Node and Edge classes are left unspecified, except indirectly through
+// the methods, eg getDestination. This makes it easier to extend the graph class
+// without having to extend Node and Edge classes also. 
+// -------------------------------------------------------------------------------------------
 
 package adt;
 
@@ -19,19 +22,19 @@ public interface Graph<N, E> {
     // ------------------------------------------------------------
     // Methods to be implemented
     // ------------------------------------------------------------
-    List<N> getNodes();
-    List<E> getEdges();
-    List<E> getEdges(N node);
-    N getDestination(E edge);
-    double getCost(E edge);
-
-    // N addNode(N node);
-    // E addEdge(N src, N dst);
-    // E addEdge(N src, N dst, double cost);
+    
     boolean addNode(N node);
     boolean addEdge(N src, N dst);
     boolean addEdge(N src, N dst, double cost);
     
+    List<N> getNodes();
+    List<E> getEdges();
+    List<E> getEdges(N node);
+    
+    N getSource(E edge);
+    N getDestination(E edge);
+    double getCost(E edge);
+
 
     // ------------------------------------------------------------
     // asString
@@ -54,18 +57,22 @@ public interface Graph<N, E> {
     // ------------------------------------------------------------
     // Return a representation of the graph as a Graphviz dot file.
     // eg
-    // Graph.asGraphviz(g, "->") => "digraph g {a -> b; a -> c; b -> c;}" // directed
-    // Graph.asGraphviz(g, "-") => "digraph g {a - b; a - c; b - c;}" // undirected
-    static <N, E> String asGraphviz(Graph<N, E> g, String delim) {
+    // Graph.asGraphviz(g, "->") => "digraph g {a -> b; a -> c; b -> c;}"
+    static <N, E> String asGraphviz(Graph<N, E> g, boolean directedGraph) {
+        
         StringBuilder sb = new StringBuilder();
-        sb.append("digraph g {\n");
-        for (N n : g.getNodes()) {
-            for (E e : g.getEdges(n)) {
-                N dest = g.getDestination(e);
-                sb.append("    \"" + n + "\"" + delim + "\"" + dest + "\";\n");
-            }
+        String graphtype = directedGraph ? "digraph" : "graph";
+        String delim = directedGraph ? "->" : "--";
+        String graphname = "g";
+        
+        sb.append(graphtype + " " + graphname + " {\n");
+        for (E e : g.getEdges()) {
+            N src = g.getSource(e);
+            N dst = g.getDestination(e);
+            sb.append("    \"" +  src + "\"" + delim + "\"" + dst + "\";\n");
         }
         sb.append("}\n");
+        
         return sb.toString();
     }
 

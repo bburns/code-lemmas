@@ -1,5 +1,5 @@
 
-// Test of directed graph
+// Test of DirectedGraph
 
 
 package ds;
@@ -16,7 +16,7 @@ public class DirectedGraphTest {
     
     @Test public void test() throws Exception {
 
-        DirectedGraph<Integer> g = new DirectedGraph<>(); // works
+        DirectedGraph<Integer> g = new DirectedGraph<>();
 
         // a triangle
         
@@ -28,8 +28,8 @@ public class DirectedGraphTest {
         g.addEdge(1,2);
         g.addEdge(2,0,2);
         
-        // System.out.println(g);
-        // System.out.println(g.toGraphviz());
+        System.out.println(g);
+        System.out.println(g.toGraphviz());
         
         List<Integer> nodes;
         List<DirectedGraph.Edge<Integer>> edges;
@@ -43,18 +43,15 @@ public class DirectedGraphTest {
 
         // all edges
         edges = g.getEdges();
-        assertEquals(3, edges.size());
         // System.out.println(edges);
-        
+        assertEquals(3, edges.size());
+
         // first edge in list
-        // need to override .equals
-        // assertTrue(edges.contains(new GraphDirected.Edge<Integer>(1,2)));
-        // GraphDirected.Edge<Integer> e1 = new GraphDirected.Edge<>(0,1);
         edge = new DirectedGraph.Edge<>(0,1);
         // System.out.println(edge);
         assertTrue(edges.contains(edge));
-        assertEquals(edge,edges.get(0)); 
-        
+        assertEquals(edge,edges.get(0));
+
         
         // edges from node 2
         edges = g.getEdges(2);
