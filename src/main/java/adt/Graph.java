@@ -1,28 +1,30 @@
-// -------------------------------------------------------------------------------------------
-// A Graph interface with nodes and edges, and some static methods.
-//
-// The Node and Edge classes are left unspecified, except indirectly through
-// the methods, eg getDestination. This makes it easier to extend the graph class
-// without having to extend Node and Edge classes also. 
-// -------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
+// Graph
+// A graph interface with nodes and edges, and some static methods.
+// ----------------------------------------------------------------------------
+// The Node and Edge classes are left unspecified here, except
+// indirectly through the methods, eg getDestination.
+// ----------------------------------------------------------------------------
+
+
+// TODO improve edge interface - leads to code like this -
+// List<UndirectedGraph.Edge<Character>> edges;
+
 
 package adt;
 
 
-import java.util.List;
+import java.util.*;
 
 
-// ------------------------------------------------------------
-// Graph interface with some static methods
-// ------------------------------------------------------------
+// Graph
 // N for node class, E for edge class
-
 public interface Graph<N, E> {
 
-    // ------------------------------------------------------------
+
     // Methods to be implemented
-    // ------------------------------------------------------------
-    
+    // -----------------------------------------------
+
     boolean addNode(N node);
     boolean addEdge(N src, N dst);
     boolean addEdge(N src, N dst, double cost);
@@ -36,13 +38,12 @@ public interface Graph<N, E> {
     double getCost(E edge);
 
 
-    // ------------------------------------------------------------
     // asString
-    // ------------------------------------------------------------
+    // -----------------------------------------------
     // Return a string representation of the given Graph object -
-    // a list of nodes and where they exit to.
-    // eg
+    // a list of nodes and where they exit to, eg
     // Graph.asString(g) => "a->[b,c]   b->[d,a]   c->[]   d->[b]"
+
     static <N, E> String asString(Graph<N, E> g) {
         StringBuilder sb = new StringBuilder();
         for (N n : g.getNodes()) {
@@ -52,12 +53,11 @@ public interface Graph<N, E> {
     }
 
 
-    // ------------------------------------------------------------
     // asGraphviz
-    // ------------------------------------------------------------
-    // Return a representation of the graph as a Graphviz dot file.
-    // eg
-    // Graph.asGraphviz(g, "->") => "digraph g {a -> b; a -> c; b -> c;}"
+    // -----------------------------------------------
+    // Return a representation of the graph as a Graphviz dot file, eg
+    // Graph.asGraphviz(g, true) => "digraph g {a -> b; a -> c; b -> c;}"
+
     static <N, E> String asGraphviz(Graph<N, E> g, boolean directedGraph) {
         
         StringBuilder sb = new StringBuilder();

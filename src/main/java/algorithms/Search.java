@@ -1,5 +1,6 @@
-
+// ----------------------------------------------------------------------------
 // Search algorithms
+// ----------------------------------------------------------------------------
 
 
 package algorithms;
@@ -78,7 +79,8 @@ public class Search {
 
 
     // ------------------------------------------------------------
-    // Dijkstra's algorithm - find shortest distance between two nodes
+    // Dijkstra's algorithm
+    // find shortest distance between two nodes
     // ------------------------------------------------------------
     // Given a Graph g, find the shortest distance from start to target.
     // Returns distance, or infinity if no path to target exists.

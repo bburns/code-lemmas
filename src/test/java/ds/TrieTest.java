@@ -1,7 +1,9 @@
 
-// Test Trie
+// Test of Trie
+
 
 package ds;
+
 
 import static test.Test.*;
 

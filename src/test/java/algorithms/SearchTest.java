@@ -1,5 +1,5 @@
 
-// Test search algorithms
+// Test of search algorithms
 
 
 package algorithms;
@@ -13,9 +13,6 @@ package algorithms;
 
 //import static org.junit.Assert.*;
 //import static test.Test.*;
-//import static test.Test.assertEquals0;
-//import static test.Test.assertInfinity;
-//import static test.Test.assertZero;
 
 
 

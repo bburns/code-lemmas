@@ -1,5 +1,6 @@
-
+// ----------------------------------------------------------------------------
 // Sort algorithms
+// ----------------------------------------------------------------------------
 
 
 package algorithms;
@@ -17,7 +18,7 @@ public class Sort {
 
     // Bubble sort
     // Returns new list (with same object references)
-    public static <T extends Comparable> List<T> bubble(List<T> in) {
+    public static <T extends Comparable<? super T>> List<T> bubble(List<T> in) {
         List<T> a = new ArrayList<>(in); // shallow copy
         int n = a.size();
         for (int i = 1; i < n; i++) {

@@ -1,19 +1,15 @@
-
+// ----------------------------------------------------------------------------
 // Trie
+// ----------------------------------------------------------------------------
 // Add words to Trie object, retrieve list of words matching
 // a given prefix.
-// ---------------------------------------------------
+// ----------------------------------------------------------------------------
+
 
 package ds;
 
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Arrays;
-import java.util.Collections;
-
-//import static test.Test.test;
+import java.util.*;
 
 
 // Trie class

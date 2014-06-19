@@ -1,14 +1,14 @@
-// -------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // DirectedGraph
 // A simple directed graph class, implementing the Graph interface.
-// Edges have a cost associated with them.
-//
+// Edges have a cost associated with them. UndirectedGraph derives from this.
+// ----------------------------------------------------------------------------
 // eg
 // DirectedGraph<Integer> g = new DirectedGraph<>();
 // g.addNode(0);
 // g.addNode(1);
 // g.addEdge(0,1,2.0); // cost 2.0
-// -------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
 
 // TODO add index for edges for faster access, for larger graphs
@@ -16,19 +16,27 @@
 
 package ds;
 
-import adt.Graph;
 
-import java.util.List;
-import java.util.ArrayList;
+import adt.Graph; // interface
+
+import java.util.*;
+
 
 
 public class DirectedGraph<N> implements Graph<N, DirectedGraph.Edge<N>> {
 
-    // set of nodes and edges
+    // a graph consists of a set of nodes and edges
     List<N> nodes = new ArrayList<>();
     List<Edge<N>> edges = new ArrayList<>();
 
+    // representations
+    public String toString() { return Graph.asString(this); }
+    public String toGraphviz() { return Graph.asGraphviz(this, true); }
+
+
+    // ------------------------------------------------------------
     // Graph interface
+    // ------------------------------------------------------------
 
     @Override public boolean addNode(N n) { return nodes.add(n); }
     @Override public boolean addEdge(N src, N dst) { return addEdge(src, dst, 1); }
@@ -37,7 +45,7 @@ public class DirectedGraph<N> implements Graph<N, DirectedGraph.Edge<N>> {
     @Override public List<N> getNodes() { return nodes; }
     @Override public List<Edge<N>> getEdges() {return edges; } 
     @Override public List<Edge<N>> getEdges(N node) {
-        // TODO try a lambda
+        // TODO use a lambda
         // TODO use index or multimap for speed
         List<Edge<N>> list = new ArrayList<>();
         for (Edge<N> edge : edges) { if (edge.src.equals(node)) { list.add(edge); } }
@@ -50,21 +58,23 @@ public class DirectedGraph<N> implements Graph<N, DirectedGraph.Edge<N>> {
 
     
     
-    // representations
-    public String toString() { return Graph.asString(this); }
-    public String toGraphviz() { return Graph.asGraphviz(this, true); }
-
-    
-    // Edges have an optional associated cost
+    // ------------------------------------------------------------
+    // Edge
+    // ------------------------------------------------------------
     static class Edge<N> {
+
+        // an edge is a 3-tuple: source, destination, cost
         N src;
         N dst;
         double cost;
-        Edge(N src, N dst) { this.src = src; this.dst = dst; this.cost = 1; } // constructor
-        Edge(N src, N dst, double cost) { this.src = src; this.dst = dst; this.cost = cost; } // constructor
-        @Override public String toString () { return dst.toString(); } // used by Graph.asString
+
+        // constructors
+        Edge(N src, N dst) { this.src = src; this.dst = dst; this.cost = 1; }
+        Edge(N src, N dst, double cost) { this.src = src; this.dst = dst; this.cost = cost; }
+
+        // representation - used by Graph.asString
+        @Override public String toString () { return dst.toString(); }
         
-        // @Override @SuppressWarnings("unchecked") public boolean equals (Object other) {
         @Override public boolean equals (Object other) {
             Edge<?> e = (Edge<?>) other; // warning if use Edge<N> - unchecked method invocation
             if (other == null) {return false;}
@@ -83,8 +93,7 @@ public class DirectedGraph<N> implements Graph<N, DirectedGraph.Edge<N>> {
             return result;
         }
     }
-    
-    
+
 }
 
 
