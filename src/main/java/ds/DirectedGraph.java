@@ -1,7 +1,8 @@
 // ----------------------------------------------------------------------------
 // DirectedGraph
 // A simple directed graph class, implementing the Graph interface.
-// Edges have a cost associated with them. UndirectedGraph derives from this.
+// Edges have a cost associated with them.
+// UndirectedGraph derives from this.
 // ----------------------------------------------------------------------------
 // eg
 // DirectedGraph<Integer> g = new DirectedGraph<>();

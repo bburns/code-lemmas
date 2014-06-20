@@ -4,21 +4,19 @@
 // Uses string-based comparison which works for most things.
 //
 // @author Brian Burns <bburns.km@gmail.com>
-// -------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // This is something in between Java assert and JUnit - gives more information
 // than assert, but less verbose than JUnit.
 // Also won't halt execution on failure, and can't be ignored accidentally if
 // forget -ea flag like assert.
 //
-// Usage
-//
+// Usage:
 // import static test.Test.*;
-//
 // test(1+1, 2, "1+1"); // [OK] 1+1 => 2
 // test(1+1, 3, "1+1"); // [FAILED] 1+1 => 2 [expected 3]
 // test(1+1, 2); // [OK] unnamed => 2
 // test(3==3); // [OK] boolean => true
-// -------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
 
 // TODO make argument order match JUNIT - expect, actual and msg, expect, actual.

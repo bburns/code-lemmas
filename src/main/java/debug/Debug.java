@@ -8,15 +8,17 @@
 // vs
 // p(g);
 //
-// Usage
+// Usage:
 // import static debug.Debug.*;
-// ..
 // pon();
 // p("hello");
 // p("room %d", 32);
 // poff();
 // p("goodbye");
 // ----------------------------------------------------------------------------
+
+
+// TODO merge with Test class
 
 
 package debug;

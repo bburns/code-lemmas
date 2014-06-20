@@ -7,7 +7,9 @@
 // ----------------------------------------------------------------------------
 
 
-// TODO improve edge interface - leads to code like this -
+// TODO all comments to javadoc style. because standard, and work with intellij
+
+// TODO improve edge interface - currently have code like this -
 // List<UndirectedGraph.Edge<Character>> edges;
 
 
