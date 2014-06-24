@@ -24,11 +24,14 @@ import java.util.*;
 
 
 
-public class DirectedGraph<N> implements Graph<N, DirectedGraph.Edge<N>> {
+//public class DirectedGraph<N> implements Graph<N, DirectedGraph.Edge<N>> {
+//public class DirectedGraph<N,E> implements Graph<N, E> {
+public class DirectedGraph<N,E extends DirectedGraph.Edge<N>> implements Graph<N,E> {
 
     // a graph consists of a set of nodes and edges
     List<N> nodes = new ArrayList<>();
-    List<Edge<N>> edges = new ArrayList<>();
+//    List<Edge<N>> edges = new ArrayList<>();
+    List<E> edges = new ArrayList<>();
 
     // representations
     public String toString() { return Graph.asString(this); }
@@ -39,30 +42,42 @@ public class DirectedGraph<N> implements Graph<N, DirectedGraph.Edge<N>> {
     // Graph interface
     // ------------------------------------------------------------
 
+//    @Override public E newEdge(N src, N dst) { }
+
     @Override public boolean addNode(N n) { return nodes.add(n); }
-    @Override public boolean addEdge(N src, N dst) { return addEdge(src, dst, 1); }
-    @Override public boolean addEdge(N src, N dst, double cost) { return edges.add(new Edge<N>(src, dst, cost)); }
-    
+    @Override public boolean addEdge(E edge) { return edges.add(edge); }
+//    @Override public boolean addEdge(N src, N dst) { return addEdge(src, dst, 1); }
+//    @Override public boolean addEdge(N src, N dst, double cost) { return edges.add(new Edge<N>(src, dst, cost)); }
+//    @Override public boolean addEdge(N src, N dst, double cost) { return edges.add(new E(src, dst, cost)); }
+
     @Override public List<N> getNodes() { return nodes; }
-    @Override public List<Edge<N>> getEdges() {return edges; } 
-    @Override public List<Edge<N>> getEdges(N node) {
+//    @Override public List<Edge<N>> getEdges() {return edges; }
+    @Override public List<E> getEdges() {return edges; }
+//    @Override public List<Edge<N>> getEdges(N node) {
+    @Override public List<E> getEdges(N node) {
         // TODO use a lambda
         // TODO use index or multimap for speed
-        List<Edge<N>> list = new ArrayList<>();
-        for (Edge<N> edge : edges) { if (edge.src.equals(node)) { list.add(edge); } }
+//        List<Edge<N>> list = new ArrayList<>();
+        List<E> list = new ArrayList<>();
+//        for (Edge<N> edge : edges) { if (edge.src.equals(node)) { list.add(edge); } }
+        for (E edge : edges) { if (edge.src.equals(node)) { list.add(edge); } }
+//        for (E edge : edges) { list.add(edge); } //. filter
         return list;
     }
     
-    @Override public N getSource(Edge<N> edge) { return edge.src; }
-    @Override public N getDestination(Edge<N> edge) { return edge.dst; }
-    @Override public double getCost(Edge<N> edge) { return edge.cost; }
+//    @Override public N getSource(Edge<N> edge) { return edge.src; }
+//    @Override public N getDestination(Edge<N> edge) { return edge.dst; }
+//    @Override public double getCost(Edge<N> edge) { return edge.cost; }
+    @Override public N getSource(E edge) { return edge.src; }
+    @Override public N getDestination(E edge) { return edge.dst; }
+    @Override public double getCost(E edge) { return edge.cost; }
 
     
     
     // ------------------------------------------------------------
     // Edge
     // ------------------------------------------------------------
-    static class Edge<N> {
+    public static class Edge<N> {
 
         // an edge is a 3-tuple: source, destination, cost
         N src;
@@ -70,8 +85,8 @@ public class DirectedGraph<N> implements Graph<N, DirectedGraph.Edge<N>> {
         double cost;
 
         // constructors
-        Edge(N src, N dst) { this.src = src; this.dst = dst; this.cost = 1; }
-        Edge(N src, N dst, double cost) { this.src = src; this.dst = dst; this.cost = cost; }
+        public Edge(N src, N dst) { this.src = src; this.dst = dst; this.cost = 1; }
+        public Edge(N src, N dst, double cost) { this.src = src; this.dst = dst; this.cost = cost; }
 
         // representation - used by Graph.asString
         @Override public String toString () { return dst.toString(); }

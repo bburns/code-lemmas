@@ -8,15 +8,18 @@ package algorithms;
 //import adt.Graph;
 //import ds.UndirectedGraph;
 
-//import org.junit.Before;
-//import org.junit.Test;
-//import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 //import static test.Test.*;
 
 
 
 public class SearchTest {
+
+
+    @Test public void test() throws Exception {}
 
 
     // TODO put this code in a House class in test.algorithms

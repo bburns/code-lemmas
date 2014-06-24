@@ -28,8 +28,9 @@ public interface Graph<N, E> {
     // -----------------------------------------------
 
     boolean addNode(N node);
-    boolean addEdge(N src, N dst);
-    boolean addEdge(N src, N dst, double cost);
+//    boolean addEdge(N src, N dst);
+//    boolean addEdge(N src, N dst, double cost);
+    boolean addEdge(E edge);
     
     List<N> getNodes();
     List<E> getEdges();
@@ -38,6 +39,7 @@ public interface Graph<N, E> {
     N getSource(E edge);
     N getDestination(E edge);
     double getCost(E edge);
+
 
 
     // asString

@@ -8,6 +8,7 @@ package house;
 
 import adt.Graph;
 import ds.UndirectedGraph;
+import ds.DirectedGraph;
 
 import java.util.*;
 
@@ -21,46 +22,46 @@ import static debug.Debug.*;
  */
 public class House {
 
-    private UndirectedGraph<Room> g = new UndirectedGraph<>();
+    DirectedGraph<Room,Exit> g = new DirectedGraph<>();
 
     public Room addRoom(String name) {
         Room room = new Room(name);
         g.addNode(room);
         return room;
     }
-    
-//    public Room getRoom(String name) {
-//       // for (Room r : rooms) if (name.equals(r.name)) return r;
-//       // return null; //. use nullobject
-//       // TODO add getNode method to Graph
-//        return g.getNode(name);
-//    }
 
+////    public Room getRoom(String name) {
+////       // for (Room r : rooms) if (name.equals(r.name)) return r;
+////       // return null; //. use nullobject
+////       // TODO add getNode method to Graph
+////        return g.getNode(name);
+////    }
+
+    public boolean addExit(Room source, Room destination) { return addExit(source, destination, 1); }
     public boolean addExit(Room source, Room destination, int cost) {
-        return g.addEdge(source, destination, cost);
+        Exit exit = new Exit(source, destination, cost);
+        return g.addEdge(exit);
     }
-
-    public boolean addExit(Room source, Room destination) { return addExit(source, destination, 0); }
-
 
 
     public static class Room {
-//        UndirectedGraph<Room> g;
         private String name;
         public Room(String name) { this.name = name; }
         public String toString() { return this.name; }
-//        public List<E> getExits() { return g.getExits(this); }
+//        public List<UndirectedGraph.Edge<Room>> getExits() { return getEdges(this); }
+//        public List<Exit> getExits() { return g.getEdges(this); }
     }
 
-    public static class Exit {
-        private Room destination;
-        private int cost;
-        public Exit(Room destination, int cost) { this.destination = destination; this.cost = cost; }
-        public String toString() { return destination.toString(); }
+
+    public static class Exit extends DirectedGraph.Edge<Room> {
+        public Exit(Room source, Room destination) { super(source, destination); }
+        public Exit(Room source, Room destination, double cost) { super(source, destination, cost); }
+//        public String toString() { return destination.toString(); }
     }
 
-    public String toString() { return g.toString(); }
-    public String toGraphviz() { return g.toGraphviz(); }
+
+    public String toString() { return Graph.asString(g); }
+    public String toGraphviz() { return Graph.asGraphviz(g, false); }
 
 }
 

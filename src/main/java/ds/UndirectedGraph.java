@@ -22,7 +22,10 @@ import java.util.*;
 
 public class UndirectedGraph<N> extends DirectedGraph<N> {
 
+//    public static class Edge<N> extends DirectedGraph.Edge<N> {}
+
     @Override public List<Edge<N>> getEdges(N node) {
+//    @Override public List<? extends Edge<N>> getEdges(N node) {
         List<Edge<N>> list = new ArrayList<>();
         for (Edge<N> edge : edges) {
             if (edge.src.equals(node)) { list.add(edge); }
@@ -39,7 +42,6 @@ public class UndirectedGraph<N> extends DirectedGraph<N> {
     public String toGraphviz() { return Graph.asGraphviz(this, false); }
 
 }
-
 
 
 
