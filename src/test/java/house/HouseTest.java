@@ -5,6 +5,11 @@
 package house;
 
 
+
+import algorithms.*; // Sort, Search, ..
+
+
+import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -14,7 +19,7 @@ import static debug.Debug.*;
 
 public class HouseTest {
 
-    @Test public void test() throws Exception {
+    @Before public void setUp() throws Exception {
 
         House h = new House();
 
@@ -49,7 +54,14 @@ public class HouseTest {
 //        List<Exit> foyer.getExits();
 
 //        p(h);
-        p(h.toGraphviz());
+//        p(h.toGraphviz());
+
+//        Search.dfs(g, )
+
+    }
+
+
+    @Test public void test() throws Exception {
 
     }
 }

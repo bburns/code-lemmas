@@ -21,7 +21,8 @@ import static debug.Debug.*;
  */
 public class House {
 
-    private UndirectedGraph<Room> g = new UndirectedGraph<>();
+//    private UndirectedGraph<Room> g = new UndirectedGraph<>();
+    public UndirectedGraph<Room> g = new UndirectedGraph<>();
 
     public Room addRoom(String name) {
         Room room = new Room(name);
@@ -29,12 +30,11 @@ public class House {
         return room;
     }
     
-//    public Room getRoom(String name) {
-//       // for (Room r : rooms) if (name.equals(r.name)) return r;
-//       // return null; //. use nullobject
-//       // TODO add getNode method to Graph
-//        return g.getNode(name);
-//    }
+    public Room getRoom(String name) {
+        List<Room> rooms = g.getNodes();
+        for (Room r : rooms) { if (name.equals(r.name)) return r; }
+        return null; // TODO use nullobject
+    }
 
     public boolean addExit(Room source, Room destination, int cost) {
         return g.addEdge(source, destination, cost);

@@ -8,80 +8,84 @@ package algorithms;
 //import adt.Graph;
 //import ds.UndirectedGraph;
 
-//import org.junit.Before;
-//import org.junit.Test;
-//import static org.junit.Assert.*;
+import house.House;
+
+
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 //import static test.Test.*;
 
 
 
+
 public class SearchTest {
 
+    House h;
 
-    // TODO put this code in a House class in test.algorithms
+    @Before public void setUp() throws Exception {
 
-//    Zork z;
-//
-//    @Before
-//    public void setUp() throws Exception {
-//
-//        z = new Zork();
-//
-//        Zork.Room foyer = z.addRoom("foyer");
-//        Zork.Room hallway = z.addRoom("hallway");
-//        Zork.Room upstairshall = z.addRoom("upstairs hall");
-//        Zork.Room livingroom = z.addRoom("livingroom");
-//        Zork.Room kitchen = z.addRoom("kitchen");
-//        Zork.Room stairs = z.addRoom("stairs");
-//        Zork.Room sarahsoffice = z.addRoom("sarah's office");
-//        Zork.Room willsoffice = z.addRoom("will's office");
-//        Zork.Room bedroom = z.addRoom("bedroom");
-//        Zork.Room backporch = z.addRoom("backporch");
-//        Zork.Room backyard = z.addRoom("backyard");
-//        Zork.Room shed = z.addRoom("shed");
-//        Zork.Room garage = z.addRoom("garage");
-//        Zork.Room roof = z.addRoom("roof"); // no connection
-//
-//        z.addExit(foyer,hallway);
-//        z.addExit(hallway,foyer);
-//        z.addExit(hallway,livingroom);
-//        z.addExit(hallway,kitchen);
-//        z.addExit(hallway,stairs);
-//        z.addExit(stairs,upstairshall);
-//        z.addExit(upstairshall,sarahsoffice);
-//        z.addExit(upstairshall,willsoffice);
-//        z.addExit(upstairshall,bedroom);
-//        z.addExit(kitchen,backporch);
-//        z.addExit(backporch,backyard);
-//        z.addExit(backyard,shed);
-//        z.addExit(backyard,garage);
-//
-//        System.out.println(z);
-//    }
-//
-//
-//
-//    @Test public void testDFS() throws Exception {
-//        Zork.Room foyer = z.getRoom("foyer");
-//        Zork.Room willsoffice = z.getRoom("willsoffice");
-//        Zork.Room roof = z.getRoom("roof");
-//
-//        System.out.println("running dfs...");
-//        assertEquals(Search.dfs(z, foyer, willsoffice), willsoffice);
-//        assertEquals(Search.dfs(z, foyer, roof), null);
-//    }
-//
-//
-//    @Test public void testBFS() throws Exception {
-//        Zork.Room foyer = z.getRoom("foyer");
-//        Zork.Room willsoffice = z.getRoom("willsoffice");
-//        Zork.Room roof = z.getRoom("roof");
-//
-//        System.out.println("running bfs...");
-//        assertEquals(Search.bfs(z, foyer, willsoffice), willsoffice);
-//        assertEquals(Search.bfs(z, foyer, roof), null);
-//    }
+        h = new House();
+
+        House.Room foyer = h.addRoom("foyer");
+        House.Room hallway = h.addRoom("hallway");
+        House.Room upstairshall = h.addRoom("upstairs hall");
+        House.Room livingroom = h.addRoom("livingroom");
+        House.Room kitchen = h.addRoom("kitchen");
+        House.Room stairs = h.addRoom("stairs");
+        House.Room sarahsoffice = h.addRoom("sarah's office");
+        House.Room willsoffice = h.addRoom("will's office");
+        House.Room bedroom = h.addRoom("bedroom");
+        House.Room backporch = h.addRoom("backporch");
+        House.Room backyard = h.addRoom("backyard");
+        House.Room shed = h.addRoom("shed");
+        House.Room garage = h.addRoom("garage");
+        House.Room roof = h.addRoom("roof"); // no connection
+
+        h.addExit(foyer, hallway);
+        h.addExit(hallway, livingroom);
+        h.addExit(hallway, kitchen);
+        h.addExit(hallway, stairs);
+        h.addExit(stairs, upstairshall);
+        h.addExit(upstairshall, sarahsoffice);
+        h.addExit(upstairshall, willsoffice);
+        h.addExit(upstairshall, bedroom);
+        h.addExit(kitchen, backporch);
+        h.addExit(backporch, backyard);
+        h.addExit(backyard, shed);
+        h.addExit(backyard, garage);
+
+    }
+
+
+
+    @Test public void testDFS() throws Exception {
+        House.Room foyer = h.getRoom("foyer");
+        House.Room willsoffice = h.getRoom("will's office");
+        House.Room roof = h.getRoom("roof");
+
+        assertNotNull(foyer);
+        assertNotNull(willsoffice);
+        assertNotNull(roof);
+
+        assertEquals(Search.dfs(h.g, foyer, willsoffice), willsoffice);
+        assertEquals(Search.dfs(h.g, foyer, roof), null);
+    }
+
+
+    @Test public void testBFS() throws Exception {
+        House.Room foyer = h.getRoom("foyer");
+        House.Room willsoffice = h.getRoom("will's office");
+        House.Room roof = h.getRoom("roof");
+
+        assertNotNull(foyer);
+        assertNotNull(willsoffice);
+        assertNotNull(roof);
+
+        assertEquals(Search.bfs(h.g, foyer, willsoffice), willsoffice);
+        assertEquals(Search.bfs(h.g, foyer, roof), null);
+    }
 
 
 //    // Get shortest distance from start to target in given graph.
