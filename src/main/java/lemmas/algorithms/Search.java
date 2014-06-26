@@ -3,10 +3,10 @@
 // ----------------------------------------------------------------------------
 
 
-package algorithms;
+package lemmas.algorithms;
 
 
-import adt.Graph;
+import lemmas.adt.Graph;
 
 import java.util.*;
 import static org.junit.Assert.*;

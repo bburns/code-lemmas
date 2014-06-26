@@ -6,13 +6,9 @@
 package house;
 
 
-import adt.Graph;
-import ds.UndirectedGraph;
+import lemmas.ds.UndirectedGraph;
 
 import java.util.*;
-
-import static test.Test.*;
-import static debug.Debug.*;
 
 
 /** House

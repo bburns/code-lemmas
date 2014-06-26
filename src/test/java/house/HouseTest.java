@@ -6,15 +6,8 @@ package house;
 
 
 
-import algorithms.*; // Sort, Search, ..
-
-
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
-
-import static debug.Debug.*;
-
 
 
 public class HouseTest {
@@ -53,8 +46,8 @@ public class HouseTest {
 
 //        List<Exit> foyer.getExits();
 
-//        p(h);
-//        p(h.toGraphviz());
+//        log(h);
+//        log(h.toGraphviz());
 
 //        Search.dfs(g, )
 

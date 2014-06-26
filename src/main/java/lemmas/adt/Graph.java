@@ -13,7 +13,7 @@
 // List<UndirectedGraph.Edge<Character>> edges;
 
 
-package adt;
+package lemmas.adt;
 
 
 import java.util.*;

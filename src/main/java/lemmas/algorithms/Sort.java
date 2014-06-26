@@ -3,15 +3,11 @@
 // ----------------------------------------------------------------------------
 
 
-package algorithms;
+package lemmas.algorithms;
 
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Collections;
-
+import java.util.*;
 import static java.util.Arrays.asList;
-
 
 
 public class Sort {
