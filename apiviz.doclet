@@ -1,0 +1,11 @@
+
+
+-d out/apiviz
+-doclet org.jboss.apiviz.APIviz
+-docletpath c:/apps/dev/apiviz/jar/apiviz-1.3.2.GA.jar
+-classpath build/production/javaLemmas
+-sourcepath src/main/java
+-subpackages
+lemmas
+
+
