@@ -5,16 +5,15 @@
 // TODO merge with DirectedGraphTest
 
 
-package ds;
+package lemmas.ds;
 
 
 import java.util.*;
 import static java.util.Arrays.asList;
-
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import static debug.Debug.*;
+import static debug.Log.*;
 
 
 public class UndirectedGraphTest {
@@ -31,9 +30,9 @@ public class UndirectedGraphTest {
         g.addEdge('b','c', 2);
         g.addEdge('c','a');
 
-        poff();
-        p(g);
-        p(g.toGraphviz());
+        logoff();
+        log(g);
+        log(g.toGraphviz());
         
         
         List<Character> nodes;
@@ -62,10 +61,10 @@ public class UndirectedGraphTest {
         assertFalse(edges.contains(edge));
         edge = edges.get(0);
 
-        p(edge);
-        p(g.getSource(edge));
-        p(g.getDestination(edge));
-        p(g.getCost(edge));
+        log(edge);
+        log(g.getSource(edge));
+        log(g.getDestination(edge));
+        log(g.getCost(edge));
 
         assertEquals(new Character('b'), g.getDestination(edge));
         assertEquals(2.0, g.getCost(edge), 0);

@@ -6,14 +6,9 @@
 package house;
 
 
-import adt.Graph;
-import ds.UndirectedGraph;
-import ds.DirectedGraph;
+import lemmas.ds.UndirectedGraph;
 
 import java.util.*;
-
-import static test.Test.*;
-import static debug.Debug.*;
 
 
 /** House
@@ -22,12 +17,19 @@ import static debug.Debug.*;
  */
 public class House {
 
-    DirectedGraph<Room,Exit> g = new DirectedGraph<>();
+//    private UndirectedGraph<Room> g = new UndirectedGraph<>();
+    public UndirectedGraph<Room> g = new UndirectedGraph<>();
 
     public Room addRoom(String name) {
         Room room = new Room(name);
         g.addNode(room);
         return room;
+    }
+
+    public Room getRoom(String name) {
+        List<Room> rooms = g.getNodes();
+        for (Room r : rooms) { if (name.equals(r.name)) return r; }
+        return null; // TODO use nullobject
     }
 
 ////    public Room getRoom(String name) {

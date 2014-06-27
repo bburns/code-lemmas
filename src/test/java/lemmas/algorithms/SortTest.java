@@ -2,7 +2,7 @@
 // Test of sort algorithms
 
 
-package algorithms;
+package lemmas.algorithms;
 
 
 import java.util.*;

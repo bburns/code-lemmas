@@ -2,16 +2,13 @@
 // Test of DirectedGraph
 
 
-package ds;
+package lemmas.ds;
 
 
 import java.util.*;
 import static java.util.Arrays.asList;
-
 import org.junit.Test;
 import static org.junit.Assert.*;
-
-import static debug.Debug.*;
 
 
 
@@ -33,8 +30,8 @@ public class DirectedGraphTest {
         DirectedGraph.Edge<Integer> e = new DirectedGraph.Edge<>(0,1);
 
         
-//        p(g);
-//        p(g.toGraphviz());
+//        log(g);
+//        log(g.toGraphviz());
 
         List<Integer> nodes;
         List<DirectedGraph.Edge<Integer>> edges;

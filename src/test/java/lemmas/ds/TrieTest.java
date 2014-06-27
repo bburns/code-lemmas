@@ -2,10 +2,10 @@
 // Test of Trie
 
 
-package ds;
+package lemmas.ds;
 
 
-import static test.Test.*;
+import static debug.Test.*;
 
 import org.junit.Test;
 import static org.junit.Assert.*;

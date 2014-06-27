@@ -5,16 +5,14 @@
 package house;
 
 
+
+import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
-
-import static debug.Debug.*;
-
 
 
 public class HouseTest {
 
-    @Test public void test() throws Exception {
+    @Before public void setUp() throws Exception {
 
 
         House h = new House();
@@ -23,9 +21,29 @@ public class HouseTest {
         House.Room hallway = h.addRoom("hallway");
 
         h.addExit(foyer, hallway);
+        h.addExit(hallway, livingroom);
+        h.addExit(hallway, kitchen);
+        h.addExit(hallway, stairs);
+        h.addExit(stairs, upstairshall);
+        h.addExit(upstairshall, sarahsoffice);
+        h.addExit(upstairshall, willsoffice);
+        h.addExit(upstairshall, bedroom);
+        h.addExit(kitchen, backporch);
+        h.addExit(backporch, backyard);
+        h.addExit(backyard, shed);
+        h.addExit(backyard, garage);
 
-        p(h);
-        p(h.toGraphviz());
+//        List<Exit> foyer.getExits();
+
+//        log(h);
+//        log(h.toGraphviz());
+
+//        Search.dfs(g, )
+
+    }
+
+
+    @Test public void test() throws Exception {
 
 ////        List<House.Exit> exits = foyer.getExits();
 //        System.out.println(foyer.getExits());

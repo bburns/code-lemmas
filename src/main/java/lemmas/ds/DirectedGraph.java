@@ -12,13 +12,10 @@
 // ----------------------------------------------------------------------------
 
 
-// TODO add index for edges for faster access, for larger graphs
+package lemmas.ds;
 
 
-package ds;
-
-
-import adt.Graph; // interface
+import lemmas.adt.Graph; // interface
 
 import java.util.*;
 

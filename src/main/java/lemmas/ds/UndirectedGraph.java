@@ -11,10 +11,10 @@
 // ----------------------------------------------------------------------------
 
 
-package ds;
+package lemmas.ds;
 
 
-import adt.Graph; // interface
+import lemmas.adt.Graph; // interface
 
 import java.util.*;
 

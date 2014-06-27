@@ -1,35 +1,36 @@
 // ----------------------------------------------------------------------------
 // Test
 // Simple test function - compares actual and expected values as strings.
-// Uses string-based comparison which works for most things.
-//
-// @author Brian Burns <bburns.km@gmail.com>
 // ----------------------------------------------------------------------------
-// This is something in between Java assert and JUnit - gives more information
-// than assert, but less verbose than JUnit.
-// Also won't halt execution on failure, and can't be ignored accidentally if
-// forget -ea flag like assert.
+// Gives more information than assert, but less verbose than JUnit.
+// Won't halt execution on failure, and can't be ignored accidentally if
+// missing java -ea flag.
+//
+// Output:
+// [OK] 1+1 => 2
+// [FAILED] 1+1 => 2 [expected 3]
 //
 // Usage:
 // import static test.Test.*;
-// test(1+1, 2, "1+1"); // [OK] 1+1 => 2
-// test(1+1, 3, "1+1"); // [FAILED] 1+1 => 2 [expected 3]
-// test(1+1, 2); // [OK] unnamed => 2
-// test(3==3); // [OK] boolean => true
+// test(1+1, 2, "1+1");       // [OK] 1+1 => 2
+// test(1+1, 3, "1+1");       // [FAILED] 1+1 => 2 [expected 3]
+// test(1+1, 2);              // [OK] unnamed => 2
+// test(3==3);                // [OK] boolean => true
 // ----------------------------------------------------------------------------
-
+// @author Brian Burns <bburns.km@gmail.com>
+// @version 2014-06-26
+// @since   2008-08-04
+// ----------------------------------------------------------------------------
 
 // TODO make argument order match JUNIT - expect, actual and msg, expect, actual.
 
 // TODO handle exceptions - pass a lambda with code to execute, exceptions to catch
 // eg fails(lambda() 1/0); // defaults to catch Exception.
 
-
-package test;
+package debug;
 
 
 import java.util.*;
-
 import static org.junit.Assert.assertEquals;
 
 
@@ -93,7 +94,6 @@ public class Test {
         System.out.println("done");
 
     }
-
 }
 
 

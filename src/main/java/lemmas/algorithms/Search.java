@@ -3,10 +3,10 @@
 // ----------------------------------------------------------------------------
 
 
-package algorithms;
+package lemmas.algorithms;
 
 
-import adt.Graph;
+import lemmas.adt.Graph;
 
 import java.util.*;
 import static org.junit.Assert.*;
@@ -25,13 +25,17 @@ public class Search {
     // Works iteratively, uses stack to store nodes to visit
 //    public static <N, E> N dfs(Graph<N, E> g, N start, N find, N notfound) {
     public static <N, E> N dfs(Graph<N, E> g, N start, N find) {
+        System.out.println("running dfs...");
         Stack<N> unseen = new Stack<>();
         Set<N> seen = new HashSet<>();
         unseen.push(start);
         while (!unseen.empty()) {
             N n = unseen.pop();
             System.out.println("visiting " + n); // TODO use logging
-            if (n.equals(find)) { return n; }
+            if (n.equals(find)) {
+                System.out.println("-- found " + n + " --");
+                return n;
+            }
             seen.add(n);
             // add all unseen children from left to right, so will be searched right to left - change if that's an issue
             for (E e : g.getEdges(n)) {
@@ -39,10 +43,12 @@ public class Search {
                 if (!seen.contains(dest)) { unseen.push(dest); }
             }
         }
+        System.out.println("-- couldn't find " + find + " --");
         // return new N("NullObject"); // can't do due to type erasure
         // return notfound; // nullobject or null
         return null; // TODO would prefer to return a NullObject, or Optional
     }
+
 
 //    public static <N, E> N dfs(Graph<N, E> g, N start, N find) {
 //        return dfs(g, start, find, null);
@@ -60,13 +66,17 @@ public class Search {
     // to store nodes to visit.
     // TODO could combine dfs and bfs code to keep code in synch
     public static <N, E> N bfs(Graph<N, E> g, N start, N find) {
+        System.out.println("running bfs...");
         Queue<N> unseen = new ArrayDeque<>();
         Set<N> seen = new HashSet<>();
         unseen.add(start);
         while (unseen.peek() != null) { // ie while unseen.hasElements
             N n = unseen.remove();
             System.out.println("visiting " + n); // TODO use logging
-            if (n.equals(find)) { return n; }
+            if (n.equals(find)) {
+                System.out.println("-- found " + n + " --");
+                return n;
+            }
             seen.add(n);
             // add all unseen children from left to right, so will be searched right to left - change if that's an issue
             for (E e : g.getEdges(n)) {
@@ -74,6 +84,7 @@ public class Search {
                 if (!seen.contains(dest)) { unseen.add(dest); }
             }
         }
+        System.out.println("-- couldn't find " + find + " --");
         return null; // TODO would prefer to return a NullObject, or Optional
     }
 
