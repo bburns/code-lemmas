@@ -111,6 +111,7 @@ public class Trie {
         }
 
 
+        // DON'T REMOVE
         // Test the Node class
         // This class was developed first, but is now an inner class,
         // so it's less necessary to test, plus it's harder to do with JUnit.
@@ -196,7 +197,7 @@ public class Trie {
         return words.toString();
     }
 
-    // to test Node class
+    // to test Node class (DON'T REMOVE)
 //    public static void main(String[] args) { Node.testNode(); }
 
 }

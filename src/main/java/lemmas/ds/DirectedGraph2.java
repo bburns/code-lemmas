@@ -1,32 +1,34 @@
-
-// simple implementation of a directed graph, using the Graph interface,
-// for use in testing search/sort routines.
-
-
-package lemmas.ds;
-
-
-import lemmas.adt.Graph;
-
-import java.util.*;
-
+//
+//
+//// experiment - implementing a directed graph using a HashMap
+//// can't store edge cost
+//// undirected graph would need to duplicate edges
+//
+//
+//package lemmas.ds;
+//
+//
+//import lemmas.adt.Graph;
+//
+//import java.util.*;
+//
 //
 //@SuppressWarnings("serial")
-//class DirectedGraph2<N> extends HashMap<N, List<N>> implements Graph<N,DirectedGraph2.Edge<N>> {
-//
-//
-//    public List<N> getDestinations(N n) { return this.get(n); }
-//
+////class DirectedGraph2<N> extends HashMap<N, List<N>> implements Graph<N,DirectedGraph2.Edge<N>> {
+//class DirectedGraph2<N> extends HashMap<N, List<N>> implements Graph<N,Object> {
 //
 //    // ------------------------------------------------------------
 //    // Graph interface
 //    // ------------------------------------------------------------
 //
-////    @Override public boolean addNode(N n) { return nodes.add(n); }
-//    @Override public boolean addNode(N n) { return true; } // TODO store nodes
-//    @Override public boolean addEdge(N src, N dst) { return addEdge(src, dst, 1); }
+////    @Override public boolean addNode(N node) { this.addEdge(node, null); } //. null
+//    @Override public boolean addNode(N node) { return false; }
+//    @Override public boolean addEdge(Object edge) { return false; }
+//
+//
+//    public boolean addEdge(N src, N dst) { return addEdge(src, dst, 1.0); }
 //    public boolean addEdge(N src, N dst, double cost) {
-//        // uh, cost
+//        // ignore 'cost'
 //        List<N> elist = this.get(src);
 //        if (elist == null) {elist = new ArrayList<>();}
 //        elist.add(dst);
@@ -34,32 +36,36 @@ import java.util.*;
 //        return true;
 //    }
 //
+//
 //    @Override public List<N> getNodes() { return new ArrayList<N>(); }
-//    @Override public List<Edge<N>> getEdges() {
-//        List<Edge<N>> edges = new ArrayList<>();
+////    @Override public List<Edge<N>> getEdges() {
+//    @Override public List<Object> getEdges() {
+////        List<Edge<N>> edges = new ArrayList<>();
+//        List<Object> edges = new ArrayList<>();
 //        // TODO walk over nodes, add all edges
 ////        for (N node : nodes) {
 ////            for (Edge<N> edge : getEdges(node)) { edges.add(edge); }
 ////        }
 //        return edges;
 //    }
-//    @Override public List<Edge<N>> getEdges(N node) {
-//        // each node stores a list of destination nodes, while an Edge class
-//        // stores a source node, a target node, and a cost, so need to create a new Edge
-//        // for each target
-//        // inefficient, but okay for small graphs
-//        // TODO use index or multimap for speed
-//        List<N> nlist = getDestinations(node);
-//        List<Edge<N>> elist = new ArrayList<>();
-//        for (N n : nlist) { Edge<N> e = new Edge<>(node, n); elist.add(e); }
-//        return elist;
+////    @Override public List<Edge<N>> getEdges(N node) {
+//    @Override public List<Object> getEdges(N node) {
+////        List<N> nlist = getDestinations(node);
+////        List<Edge<N>> elist = new ArrayList<>();
+////        List<Object> elist = new ArrayList<>();
+////        for (N n : nlist) { Edge<N> e = new Edge<>(node, n); elist.add(e); }
+////        return elist;
+//        return null;
 //    }
 //
-//    @Override public N getSource(Edge<N> edge) { return edge.src; }
-//    @Override public N getDestination(Edge<N> edge) { return edge.dst; }
-//    @Override public double getCost(Edge<N> edge) { return edge.cost; }
+////    @Override public N getSource(Edge<N> edge) { return edge.src; }
+////    @Override public N getDestination(Edge<N> edge) { return edge.dst; }
+////    @Override public double getCost(Edge<N> edge) { return edge.cost; }
+//    @Override public N getSource(Object edge) { return null; }
+//    @Override public N getDestination(Object edge) { return this.get(edge); }
+//    @Override public double getCost(Object edge) { return edge.cost; }
 //
-//
+//    @Override public List<N> getDestinations(N n) { return this.getDestinations(n); }
 //
 //
 //

@@ -31,10 +31,8 @@ public class SortTest {
 
     @Test public void testCounting() throws Exception {
         List<Integer> in = asList(2,1,5,3,0,2,0);
-//        System.out.println(in);
         List<Integer> out = Sort.counting(in);
-//        System.out.println(out);
-        Collections.sort(in);
+        Collections.sort(in); // correct sort
         assertEquals(in, out);
     }
 
