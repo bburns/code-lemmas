@@ -22,6 +22,7 @@ import java.util.*;
 // Graph
 // N for node class, E for edge class
 public interface Graph<N, E> {
+//public interface Graph<N> {
 
 
     // Methods to be implemented
@@ -35,7 +36,8 @@ public interface Graph<N, E> {
     List<N> getNodes();
     List<E> getEdges();
     List<E> getEdges(N node);
-    
+    List<N> getDestinations(N node);
+
     N getSource(E edge);
     N getDestination(E edge);
     double getCost(E edge);

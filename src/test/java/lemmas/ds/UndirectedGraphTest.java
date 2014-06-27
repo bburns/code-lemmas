@@ -33,8 +33,8 @@ public class UndirectedGraphTest {
         logoff();
         log(g);
         log(g.toGraphviz());
-        
-        
+
+
         List<Character> nodes;
         UndirectedGraph.Edge<Character> edge;
         List<UndirectedGraph.Edge<Character>> edges;

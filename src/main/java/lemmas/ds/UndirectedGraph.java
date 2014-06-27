@@ -28,9 +28,9 @@ public class UndirectedGraph<N> extends DirectedGraph<N> {
 //    @Override public List<? extends Edge<N>> getEdges(N node) {
         List<Edge<N>> list = new ArrayList<>();
         for (Edge<N> edge : edges) {
-            if (edge.src.equals(node)) { list.add(edge); }
+            if (getSource(edge).equals(node)) { list.add(edge); }
             // edges are bidirectional, so add if node matches destination also
-            if (edge.dst.equals(node)) {
+            if (getDestination(edge).equals(node)) {
                 // TODO not very efficient, but ok for small datasets with a few edges per node
                 Edge<N> reversed = new Edge<N>(edge.dst, edge.src, edge.cost);
                 list.add(reversed);

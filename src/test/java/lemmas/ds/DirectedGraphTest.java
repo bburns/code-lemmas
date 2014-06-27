@@ -23,9 +23,9 @@ public class DirectedGraphTest {
         g.addNode(1);
         g.addNode(2);
 
-//        g.addEdge(0,1);
-//        g.addEdge(1,2);
-//        g.addEdge(2,0,2);
+        g.addEdge(0,1);
+        g.addEdge(1,2);
+        g.addEdge(2,0,2);
 
         DirectedGraph.Edge<Integer> e = new DirectedGraph.Edge<>(0,1);
 
