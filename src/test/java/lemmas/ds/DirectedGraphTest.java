@@ -5,10 +5,15 @@
 package lemmas.ds;
 
 
+import lemmas.adt.Graph;
+
 import java.util.*;
 import static java.util.Arrays.asList;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
+
+import static debug.Log.*;
 
 
 
@@ -27,11 +32,6 @@ public class DirectedGraphTest {
         g.addEdge(1,2);
         g.addEdge(2,0,2);
 
-        DirectedGraph.Edge<Integer> e = new DirectedGraph.Edge<>(0,1);
-
-        
-//        log(g);
-//        log(g.toGraphviz());
 
         List<Integer> nodes;
         List<DirectedGraph.Edge<Integer>> edges;
@@ -60,7 +60,16 @@ public class DirectedGraphTest {
         
         edge = new DirectedGraph.Edge<>(1,2);
         assertFalse(edges.contains(edge));
-        
+
+//        log(g);
+//        log(g.toGraphviz());
+
+        // make a cycle
+//        g.addEdge(1,0);
+//        log(g);
+//        log(g.hasCycle());
+
+
     }
 
 }

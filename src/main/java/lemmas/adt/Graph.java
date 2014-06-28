@@ -1,33 +1,36 @@
-// ----------------------------------------------------------------------------
-// Graph
-// A graph interface with nodes and edges, and some static methods.
-// ----------------------------------------------------------------------------
-// The Node and Edge classes are left unspecified here, except
-// indirectly through the methods, eg getDestination.
-// ----------------------------------------------------------------------------
-
-
-// TODO all comments to javadoc style. because standard, and work with intellij
-
-// TODO improve edge interface - currently have code like this -
-// List<UndirectedGraph.Edge<Character>> edges;
-
+/** ----------------------------------------------------------------------------
+ * Graph
+ * A graph interface with nodes and edges, and some static methods.
+ * ----------------------------------------------------------------------------
+ * The Node and Edge classes are left unspecified here, except
+ * indirectly through the methods, eg getDestination.
+ * ----------------------------------------------------------------------------
+ * @author Brian Burns | http://bburns.github.io
+ * @since 2014-06-01
+ * ----------------------------------------------------------------------------
+ */
 
 package lemmas.adt;
+
+// TODO all comments to javadoc style. because standard, and work with intellij
+// TODO improve edge interface - currently have code like this -
+// List<DirectedGraph.Edge<Character>> edges;
 
 
 import java.util.*;
 
 
-// Graph
-// N for node class, E for edge class
-public interface Graph<N, E> {
+/**
+ * Graph interface
+ * @param <N> node class
+ * @param <E> edge class
+ */
 //public interface Graph<N> {
+public interface Graph<N, E> {
 
-
+    // -----------------------------------------------
     // Methods to be implemented
     // -----------------------------------------------
-
     boolean addNode(N node);
 //    boolean addEdge(N src, N dst);
 //    boolean addEdge(N src, N dst, double cost);
@@ -42,14 +45,19 @@ public interface Graph<N, E> {
     N getDestination(E edge);
     double getCost(E edge);
 
+//    boolean hasCycle();
 
-
-    // asString
+    
     // -----------------------------------------------
-    // Return a string representation of the given Graph object -
-    // a list of nodes and where they exit to, eg
-    // Graph.asString(g) => "a->[b,c]   b->[d,a]   c->[]   d->[b]"
-
+    // Static methods
+    // -----------------------------------------------
+    
+    /**
+     * asString
+     * Return a string representation of the given Graph object -
+     * a list of nodes and where they exit to, eg
+     * Graph.asString(g) => "a->[b,c]   b->[d,a]   c->[]   d->[b]"
+     */
     static <N, E> String asString(Graph<N, E> g) {
         StringBuilder sb = new StringBuilder();
         for (N n : g.getNodes()) {
@@ -59,11 +67,11 @@ public interface Graph<N, E> {
     }
 
 
-    // asGraphviz
-    // -----------------------------------------------
-    // Return a representation of the graph as a Graphviz dot file, eg
-    // Graph.asGraphviz(g, true) => "digraph g {a -> b; a -> c; b -> c;}"
-
+    /**
+     * asGraphviz
+     * Return a representation of the graph as a Graphviz dot file, eg
+     * Graph.asGraphviz(g, true) => "digraph g {a -> b; a -> c; b -> c;}"
+     */
     static <N, E> String asGraphviz(Graph<N, E> g, boolean directedGraph) {
         
         StringBuilder sb = new StringBuilder();

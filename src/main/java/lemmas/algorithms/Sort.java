@@ -1,21 +1,24 @@
-// ----------------------------------------------------------------------------
-// Sort algorithms
-// ----------------------------------------------------------------------------
-
+/** ----------------------------------------------------------------------------
+ * Sort algorithms
+ * ----------------------------------------------------------------------------
+ */
 
 package lemmas.algorithms;
 
 
 import java.util.*;
 import static java.util.Arrays.asList;
+import static org.junit.Assert.*;
 
 
 public class Sort {
 
-    // Bubble sort
-    // Returns new list (with same object references)
+    /**
+     * Bubble sort
+     * Returns new list (with same object references)
+     */
     public static <T extends Comparable<? super T>> List<T> bubble(List<T> in) {
-        List<T> a = new ArrayList<>(in); // shallow copy
+        List<T> a = new ArrayList<>(in); // get shallow copy
         int n = a.size();
         for (int i = 1; i < n; i++) {
             for (int j = 0; j < n-i; j++) {
@@ -31,38 +34,38 @@ public class Sort {
 
 
 
-    // Counting sort
+    /**
+     * Counting sort
+     * Builds a histogram of all the values, then walks it to build a sorted list.
+     * Requires an array with number of elements = max of values.  
+     */
     public static List<Integer> counting(List<Integer> in) {
-
-        List<Integer> out = new ArrayList<>();
 
         // get min/max values
         int min = Collections.min(in);
         int max = Collections.max(in);
-//        int min = Integer.MAX_VALUE;
-//        int max = Integer.MIN_VALUE;
-//        for (Integer v : in) { }
 
-
-        // tally observed numbers
+        // preconditions
+        assertTrue(min >= 0);
+        
+        // build histogram of observed values
         int nplaces = max + 1;
-        int[] counts = new int[nplaces];
-        for (Integer v : in) {
-            counts[v] += 1;
+        int[] histogram = new int[nplaces];
+        for (Integer value : in) {
+            histogram[value] += 1;
         }
 
-        // walk through tally array, outputting numbers
-        int i = 0;
-        while (i < nplaces) {
-            while (counts[i] > 0) {
-                out.add(i);
-                counts[i]--;
+        // walk through histogram, adding values to sorted list
+        List<Integer> out = new ArrayList<>();
+        int value = 0;
+        while (value < nplaces) {
+            while (histogram[value] > 0) {
+                out.add(value);
+                histogram[value]--;
             }
-            i++;
+            value++;
         }
-
         return out;
     }
-
 
 }

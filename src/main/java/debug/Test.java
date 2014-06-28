@@ -1,26 +1,26 @@
-// ----------------------------------------------------------------------------
-// Test
-// Simple test function - compares actual and expected values as strings.
-// ----------------------------------------------------------------------------
-// Gives more information than assert, but less verbose than JUnit.
-// Won't halt execution on failure, and can't be ignored accidentally if
-// missing java -ea flag.
-//
-// Output:
-// [OK] 1+1 => 2
-// [FAILED] 1+1 => 2 [expected 3]
-//
-// Usage:
-// import static test.Test.*;
-// test(1+1, 2, "1+1");       // [OK] 1+1 => 2
-// test(1+1, 3, "1+1");       // [FAILED] 1+1 => 2 [expected 3]
-// test(1+1, 2);              // [OK] unnamed => 2
-// test(3==3);                // [OK] boolean => true
-// ----------------------------------------------------------------------------
-// @author Brian Burns <bburns.km@gmail.com>
-// @version 2014-06-26
-// @since   2008-08-04
-// ----------------------------------------------------------------------------
+/** ----------------------------------------------------------------------------
+ * Test
+ * Simple test function - compares actual and expected values as strings.
+ * ----------------------------------------------------------------------------
+ * Gives more information than assert, but less verbose than JUnit.
+ * Won't halt execution on failure, and can't be ignored accidentally if
+ * missing java -ea flag.
+ *
+ * Output:
+ * [OK] 1+1 => 2
+ * [FAILED] 1+1 => 2 [expected 3]
+ *
+ * Usage:
+ * import static test.Test.*;
+ * test(1+1, 2, "1+1");        // [OK] 1+1 => 2
+ * test(1+1, 3, "1+1");        // [FAILED] 1+1 => 2 [expected 3]
+ * test(1+1, 2);               // [OK] unnamed => 2
+ * test(3==3);                 // [OK] boolean => true
+ * ----------------------------------------------------------------------------
+ * @author Brian Burns <bburns.km@gmail.com>
+ * @since   2008-08-04
+ * ----------------------------------------------------------------------------
+ */
 
 // TODO make argument order match JUNIT - expect, actual and msg, expect, actual.
 

@@ -1,24 +1,22 @@
-// ----------------------------------------------------------------------------
-// DirectedGraph
-// A simple directed graph class, implementing the Graph interface.
-// Edges have a cost associated with them.
-// UndirectedGraph derives from this.
-// ----------------------------------------------------------------------------
-// eg
-// DirectedGraph<Integer> g = new DirectedGraph<>();
-// g.addNode(0);
-// g.addNode(1);
-// g.addEdge(0,1,2.0); // cost 2.0
-// ----------------------------------------------------------------------------
+/** ----------------------------------------------------------------------------
+ * DirectedGraph
+ * A simple directed graph class, implementing the Graph interface.
+ * Edges have a cost associated with them.
+ * UndirectedGraph derives from this.
+ * ----------------------------------------------------------------------------
+ * Example:
+ * DirectedGraph<Integer> g = new DirectedGraph<>();
+ * g.addNode(0);
+ * g.addNode(1);
+ * g.addEdge(0,1,2.0);  // cost 2.0
+ * ----------------------------------------------------------------------------
+ */
 
 
 package lemmas.ds;
 
-
-import lemmas.adt.Graph; // interface
-
+import lemmas.adt.Graph;
 import java.util.*;
-
 
 
 public class DirectedGraph<N> implements Graph<N, DirectedGraph.Edge<N>> {
@@ -33,7 +31,7 @@ public class DirectedGraph<N> implements Graph<N, DirectedGraph.Edge<N>> {
 
 
     // ------------------------------------------------------------
-    // Graph interface
+    // implement Graph interface
     // ------------------------------------------------------------
 
     @Override public boolean addNode(N n) { return nodes.add(n); }
@@ -59,6 +57,7 @@ public class DirectedGraph<N> implements Graph<N, DirectedGraph.Edge<N>> {
     @Override public N getDestination(Edge<N> edge) { return edge.dst; }
     @Override public double getCost(Edge<N> edge) { return edge.cost; }
 
+//    @Override boolean hasCycle() { }
 
 
     // additional methods
@@ -66,9 +65,6 @@ public class DirectedGraph<N> implements Graph<N, DirectedGraph.Edge<N>> {
     public boolean addEdge(N src, N dst, double cost) { return edges.add(new Edge<N>(src, dst, cost)); }
 
 
-    // ------------------------------------------------------------
-    // Edge
-    // ------------------------------------------------------------
     public static class Edge<N> {
 
         // an edge is a 3-tuple: source, destination, cost
@@ -77,7 +73,7 @@ public class DirectedGraph<N> implements Graph<N, DirectedGraph.Edge<N>> {
         double cost;
 
         // constructors
-        public Edge(N src, N dst) { this.src = src; this.dst = dst; this.cost = 1; }
+        public Edge(N src, N dst) { this(src, dst, 1.0); }
         public Edge(N src, N dst, double cost) { this.src = src; this.dst = dst; this.cost = cost; }
 
         // representation - used by Graph.asString

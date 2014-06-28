@@ -1,12 +1,13 @@
-// ----------------------------------------------------------------------------
-// Search algorithms
-// ----------------------------------------------------------------------------
-
+/** ----------------------------------------------------------------------------
+ * Search algorithms
+ * ----------------------------------------------------------------------------
+ */
 
 package lemmas.algorithms;
 
 
 import lemmas.adt.Graph;
+import static debug.Log.*;
 
 import java.util.*;
 import static org.junit.Assert.*;
@@ -14,26 +15,26 @@ import static org.junit.Assert.*;
 
 public class Search {
 
-    // ------------------------------------------------------------
-    // Depth first search
-    // ------------------------------------------------------------
-    // For a given Graph object and starting node, search for
-    // a particular node.
-    // Returns the found node or null if not found.
-    //
-    // Implementation
-    // Works iteratively, uses stack to store nodes to visit
-//    public static <N, E> N dfs(Graph<N, E> g, N start, N find, N notfound) {
+    /** ------------------------------------------------------------
+     * Depth first search
+     * ------------------------------------------------------------
+     * For a given Graph object and starting node, search for
+     * a particular node.
+     * Returns the found node or null if not found.
+     *
+     * Implementation:
+     * Works iteratively, uses stack to store nodes to visit.
+     */
     public static <N, E> N dfs(Graph<N, E> g, N start, N find) {
-        System.out.println("running dfs...");
+        log("running dfs...");
         Stack<N> unseen = new Stack<>();
         Set<N> seen = new HashSet<>();
         unseen.push(start);
         while (!unseen.empty()) {
             N n = unseen.pop();
-            System.out.println("visiting " + n); // TODO use logging
+            log("visiting " + n);
             if (n.equals(find)) {
-                System.out.println("-- found " + n + " --");
+                log("-- found " + n + " --");
                 return n;
             }
             seen.add(n);
@@ -43,38 +44,37 @@ public class Search {
                 if (!seen.contains(dest)) { unseen.push(dest); }
             }
         }
-        System.out.println("-- couldn't find " + find + " --");
+        log("-- couldn't find " + find + " --");
+        // TODO return NullObject or Optional
         // return new N("NullObject"); // can't do due to type erasure
-        // return notfound; // nullobject or null
-        return null; // TODO would prefer to return a NullObject, or Optional
+        return null; 
     }
 
 
-//    public static <N, E> N dfs(Graph<N, E> g, N start, N find) {
-//        return dfs(g, start, find, null);
-//    }
 
-    // ------------------------------------------------------------
-    // Breadth first search
-    // ------------------------------------------------------------
-    // For a given Graph object and starting node, search for
-    // a particular node.
-    // Returns the found node or null if not found.
-    //
-    // Implementation
-    // The same algorithm as dfs, but uses queue instead of stack
-    // to store nodes to visit.
-    // TODO could combine dfs and bfs code to keep code in synch
+    /** ------------------------------------------------------------
+     * Breadth first search
+     * ------------------------------------------------------------
+     * For a given Graph object and starting node, search for
+     * a particular node.
+     * Returns the found node or null if not found.
+     *
+     * Implementation:
+     * Same algorithm as dfs, but uses queue instead of stack
+     * to store nodes to visit.
+     *
+     * TODO could combine dfs and bfs code to keep code in synch
+     */
     public static <N, E> N bfs(Graph<N, E> g, N start, N find) {
-        System.out.println("running bfs...");
+        log("running bfs...");
         Queue<N> unseen = new ArrayDeque<>();
         Set<N> seen = new HashSet<>();
         unseen.add(start);
         while (unseen.peek() != null) { // ie while unseen.hasElements
             N n = unseen.remove();
-            System.out.println("visiting " + n); // TODO use logging
+            log("visiting " + n);
             if (n.equals(find)) {
-                System.out.println("-- found " + n + " --");
+                log("-- found " + n + " --");
                 return n;
             }
             seen.add(n);
@@ -84,29 +84,31 @@ public class Search {
                 if (!seen.contains(dest)) { unseen.add(dest); }
             }
         }
-        System.out.println("-- couldn't find " + find + " --");
-        return null; // TODO would prefer to return a NullObject, or Optional
+        log("-- couldn't find " + find + " --");
+        // TODO return NullObject or Optional
+        return null; 
     }
 
 
-    // ------------------------------------------------------------
-    // Dijkstra's algorithm
-    // find shortest distance between two nodes
-    // ------------------------------------------------------------
-    // Given a Graph g, find the shortest distance from start to target.
-    // Returns distance, or infinity if no path to target exists.
+    /** ------------------------------------------------------------
+     * Dijkstra's algorithm
+     * Find shortest distance between two nodes.
+     * ------------------------------------------------------------
+     * Given a Graph g, find the shortest distance from start to target.
+     * Returns distance, or infinity if no path to target exists.
+     */
     public static <N, E> double dijkstra(Graph<N, E> g, N startNode, N targetNode) {
 
-        // list of all nodes
+        // get list of all nodes
         Collection<N> nodes = g.getNodes();
 
+        // preconditions
         // make sure nodes exist
-//        assert nodes.contains(startNode);
-//        assert nodes.contains(targetNode);
         assertTrue(nodes.contains(startNode));
         assertTrue(nodes.contains(targetNode));
 
-        // init distances from start to node
+        // initialize distances from start to nodes
+        // d prefix indicates distance, not double
         Map<N, Double> dStartToNodeMap = new HashMap<>();
         for (N node : nodes) { dStartToNodeMap.put(node, Double.POSITIVE_INFINITY); }
         dStartToNodeMap.put(startNode, 0.0); // start to start is 0
@@ -129,7 +131,10 @@ public class Search {
             unvisited.remove(currentNode);
 
             // if target has been visited, return its distance value
-            if (! unvisited.contains(targetNode)) { dStartToTarget = dStartToNodeMap.get(targetNode); break; }
+            if (! unvisited.contains(targetNode)) {
+                dStartToTarget = dStartToNodeMap.get(targetNode);
+                break;
+            }
 
             // find unvisited node with lowest distance from start
             N nodeLowest = null;
@@ -154,11 +159,15 @@ public class Search {
     }
 
 
-    // Dijkstra helper method - update distances from start node to unvisited neighbors.
-    // Modifies contents of dStartToNodeMap. Returns nothing.
+    /**
+     * Dijkstra helper method
+     * Update distances from start node to unvisited neighbors.
+     * Modifies contents of dStartToNodeMap. Returns nothing.
+     */
     static <N, E> void dijkstraUpdateNeighbors(Graph<N, E> g, N currentNode,
-                                               List<N> unvisited, double dStartToCurrent, Map<N, Double> dStartToNodeMap) {
-
+                         List<N> unvisited, double dStartToCurrent,
+                         Map<N, Double> dStartToNodeMap)
+    {
         // iterate over current node's unvisited neighbors
         Collection<E> edges = g.getEdges(currentNode);
         for (E edge : edges) {
@@ -169,7 +178,8 @@ public class Search {
                 double dStartToNeighbor = dStartToNodeMap.get(neighborNode);
                 double dCurrentToNeighbor = g.getCost(edge);
                 double dStartToCurrentToNeighbor = dStartToCurrent + dCurrentToNeighbor;
-//                System.out.println(neighborNode + " " + dStartToNeighbor + " " + dCurrentToNeighbor + " " + dStartToCurrentToNeighbor);
+                // log(neighborNode + " " + dStartToNeighbor + " " + dCurrentToNeighbor
+                    // + " " + dStartToCurrentToNeighbor);
 
                 // if found better path to neighbor, update its distance from start node
                 if (dStartToCurrentToNeighbor < dStartToNeighbor) {

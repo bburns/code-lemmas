@@ -1,21 +1,21 @@
-// ----------------------------------------------------------------------------
-// Debug
-// simple debug print functions
-// ----------------------------------------------------------------------------
-//
-// Logging with slf4j is too heavy in some cases, eg
-// log.info(g.toString());
-// vs
-// log(g);
-//
-// Usage:
-// import static debug.Log.*;
-// logon();
-// log("hello");
-// log("room %d", 32);
-// logoff();
-// log("goodbye");
-// ----------------------------------------------------------------------------
+/** ----------------------------------------------------------------------------
+ * Log
+ * Simple logging functions - print to System.out
+ * ----------------------------------------------------------------------------
+ * Lighter weight than slf4j, eg
+ *   log.info(g.toString()); // slf4j
+ * vs
+ *   log(g);
+ * ----------------------------------------------------------------------------
+ * Usage:
+ *   import static debug.Log.*;
+ *   logon();
+ *   log("hello");
+ *   log("room %d", 32);
+ *   logoff();
+ *   log("goodbye");
+ * ----------------------------------------------------------------------------
+ */
 
 package debug;
 
@@ -35,6 +35,5 @@ public class Log {
     private static boolean loggingOn = true;
 
 }
-
 
 

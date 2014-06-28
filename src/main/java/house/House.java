@@ -1,7 +1,8 @@
-
-// House
-// test subject for Graph interface and dfs
-// ---------------------------------------------------------------------
+/**
+ * House
+ * test subject for Graph interface and dfs
+ * ---------------------------------------------------------------------
+ */
 
 package house;
 
@@ -20,9 +21,9 @@ import java.util.*;
  */
 public class House {
 
-//    private UndirectedGraph<Room> g = new UndirectedGraph<>();
-    public UndirectedGraph<Room> g = new UndirectedGraph<>();
+    // TODO should be able to use Graph type for g
 //    public Graph<Room> g = new UndirectedGraph<>();
+    public UndirectedGraph<Room> g = new UndirectedGraph<>();
 
     public Room addRoom(String name) {
         Room room = new Room(name);
@@ -43,35 +44,24 @@ public class House {
     public boolean addExit(Room source, Room destination) { return addExit(source, destination, 0); }
 
     public List<Exit> getExits(Room room) {
-//        g.getEdges(room);
-//    }
-//    @Override public List<Edge<N>> getEdges(N node) {
-        // each node stores a list of destination nodes, while an Edge class
-        // stores a source node, a target node, and a cost, so need to create a new Edge
-        // for each target
-        // inefficient, but okay for small graphs
-        // TODO use index or multimap for speed
-//        List<N> nlist = getDestinations(node);
-//        List<Edge<N>> elist = new ArrayList<>();
-//        for (N n : nlist) { Edge<N> e = new Edge<>(node, n); elist.add(e); }
-//        return elist;
-        List<Exit> exits = new ArrayList<>();
+        // get Edges from graph, convert them to Exits. 
+        // inefficient, but okay for small graphs.
         List<DirectedGraph.Edge<Room>> edges = g.getEdges(room);
+        List<Exit> exits = new ArrayList<>();
         for (DirectedGraph.Edge<Room> edge : edges) {
             Exit exit = new Exit(g.getDestination(edge), g.getCost(edge));
         }
-//        for (N n : nlist) { Edge<N> e = new Edge<>(node, n); elist.add(e); }
         return exits;
     }
 
 
-
     public static class Room {
-//        UndirectedGraph<Room> g;
         private String name;
         public Room(String name) { this.name = name; }
         public String toString() { return this.name; }
-//        public List<E> getExits() { return g.getExits(this); }
+        // TODO need getExits fn
+        // UndirectedGraph<Room> g;
+        // public List<E> getExits() { return g.getExits(this); }
     }
 
     public static class Exit {

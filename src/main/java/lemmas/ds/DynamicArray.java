@@ -1,9 +1,9 @@
-/**
+/** ----------------------------------------------------------------------------
  * DynamicArray
  * Extend ArrayList to work with arbitrary indexes -
  * automatically resizes if get or set are out of bounds. 
+ * ----------------------------------------------------------------------------
  */
-
 
 package lemmas.ds;
 
@@ -29,15 +29,17 @@ public class DynamicArray<E> extends ArrayList<E> {
         for (int i = 0; i < padding; i++) { add(null); }
     }
     
+    
+    @Override public E get(int index) {
+        extendArray(index);
+        return super.get(index);
+    }
+    
     @Override public E set(int index, E element) {
         extendArray(index);
         return super.set(index, element);
     }
 
-    @Override public E get(int index) {
-        extendArray(index);
-        return super.get(index);
-    }
 }
 
 
