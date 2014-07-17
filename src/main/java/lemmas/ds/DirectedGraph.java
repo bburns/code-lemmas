@@ -26,6 +26,7 @@ public class DirectedGraph<N> implements Graph<N, DirectedGraph.Edge<N>> {
     List<Edge<N>> edges = new ArrayList<>();
 
     // representations
+    @Override
     public String toString() { return Graph.asString(this); }
     public String toGraphviz() { return Graph.asGraphviz(this, true); }
 
@@ -62,7 +63,7 @@ public class DirectedGraph<N> implements Graph<N, DirectedGraph.Edge<N>> {
 
     // additional methods
     public boolean addEdge(N src, N dst) { return addEdge(src, dst, 1); }
-    public boolean addEdge(N src, N dst, double cost) { return edges.add(new Edge<N>(src, dst, cost)); }
+    public boolean addEdge(N src, N dst, double cost) { return edges.add(new Edge<>(src, dst, cost)); }
 
 
     public static class Edge<N> {
