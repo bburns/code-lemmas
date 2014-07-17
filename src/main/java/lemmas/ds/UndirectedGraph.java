@@ -28,14 +28,14 @@ public class UndirectedGraph<N> extends DirectedGraph<N> {
             // edges are bidirectional, so add if node matches destination also
             if (getDestination(edge).equals(node)) {
                 // TODO not efficient, but ok for small datasets with a few edges per node
-                Edge<N> reversed = new Edge<N>(edge.dst, edge.src, edge.cost);
+                Edge<N> reversed = new Edge<>(edge.dst, edge.src, edge.cost);
                 list.add(reversed);
             }
         }
         return list;
     }
 
-    public String toGraphviz() { return Graph.asGraphviz(this, false); }
+    @Override public String toGraphviz() { return Graph.asGraphviz(this, false); }
 
 }
 
