@@ -6,7 +6,7 @@ A small set of data structures and algorithms implemented in Java.
 
 These are like lemmas in mathematics - if the built in data types and operations of a language correspond to axioms, and programs to theorems, then these are the intermediate building blocks between them, as used in libraries and collection classes.
 
-These are basically just learning exercises for me, and are implemented much better elsewhere. In other words, don't use them for building medical equipment software. 
+These are basically just learning exercises for me, and are implemented much better elsewhere. In other words, don't use them for building medical device software! 
 
 
 Contents
