@@ -5,7 +5,7 @@
  * The Node and Edge classes are left unspecified here, except
  * indirectly through the methods, eg getDestination.
  * ----------------------------------------------------------------------------
- * @author Brian Burns | http://bburns.github.io
+ * @author Brian Burns <bburns.km@gmail.com> | http://bburns.github.io
  * @since 2014-06-01
  * ----------------------------------------------------------------------------
  */
